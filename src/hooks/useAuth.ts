@@ -71,7 +71,9 @@ export function useAuth() {
     isLoading,
     isAuthenticated: !!user,
     isPro: user?.isPro || false,
+    isValidatedPro: user?.isPro && user?.isValidated,
     isAdmin: user?.role === 'admin',
+    discountRate: user?.discountRate || 0,
 
     // Actions
     login: loginMutation.mutateAsync,
