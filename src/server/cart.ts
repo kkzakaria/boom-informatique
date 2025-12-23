@@ -18,7 +18,7 @@ interface CartWithItems {
  * Get or create cart for current user/session
  */
 async function getOrCreateCart(db: ReturnType<typeof getDb>): Promise<number> {
-  const user = await getCurrentUser()
+  const user = getCurrentUser()
 
   if (user) {
     // Check for existing user cart
@@ -42,7 +42,7 @@ async function getOrCreateCart(db: ReturnType<typeof getDb>): Promise<number> {
   }
 
   // Anonymous user - use session cart
-  const sessionCartId = await getSessionCartId()
+  const sessionCartId = getSessionCartId()
 
   if (sessionCartId) {
     // Verify cart still exists
@@ -129,8 +129,8 @@ async function getCartItemsWithDetails(
 export const getCart = createServerFn({ method: 'GET' }).handler(
   async (): Promise<CartWithItems | null> => {
     const db = getDb()
-    const user = await getCurrentUser()
-    const sessionCartId = await getSessionCartId()
+    const user = getCurrentUser()
+    const sessionCartId = getSessionCartId()
 
     let cart = null
 
@@ -167,7 +167,7 @@ export const getCart = createServerFn({ method: 'GET' }).handler(
  * Add item to cart
  */
 export const addToCartServer = createServerFn({ method: 'POST' })
-  .validator(
+  .inputValidator(
     (data: { productId: number; quantity: number }) => {
       if (!data.productId || data.quantity < 1) {
         throw new Error('Invalid product or quantity')
@@ -234,7 +234,7 @@ export const addToCartServer = createServerFn({ method: 'POST' })
  * Update cart item quantity
  */
 export const updateCartItem = createServerFn({ method: 'POST' })
-  .validator(
+  .inputValidator(
     (data: { productId: number; quantity: number }) => {
       if (!data.productId || data.quantity < 0) {
         throw new Error('Invalid product or quantity')
@@ -244,8 +244,8 @@ export const updateCartItem = createServerFn({ method: 'POST' })
   )
   .handler(async ({ data }) => {
     const db = getDb()
-    const user = await getCurrentUser()
-    const sessionCartId = await getSessionCartId()
+    const user = getCurrentUser()
+    const sessionCartId = getSessionCartId()
 
     let cart = null
 
@@ -315,14 +315,14 @@ export const updateCartItem = createServerFn({ method: 'POST' })
  * Remove item from cart
  */
 export const removeFromCartServer = createServerFn({ method: 'POST' })
-  .validator((productId: number) => {
+  .inputValidator((productId: number) => {
     if (!productId) throw new Error('Product ID required')
     return productId
   })
   .handler(async ({ data: productId }) => {
     const db = getDb()
-    const user = await getCurrentUser()
-    const sessionCartId = await getSessionCartId()
+    const user = getCurrentUser()
+    const sessionCartId = getSessionCartId()
 
     let cart = null
 
@@ -364,8 +364,8 @@ export const removeFromCartServer = createServerFn({ method: 'POST' })
 export const clearCartServer = createServerFn({ method: 'POST' }).handler(
   async () => {
     const db = getDb()
-    const user = await getCurrentUser()
-    const sessionCartId = await getSessionCartId()
+    const user = getCurrentUser()
+    const sessionCartId = getSessionCartId()
 
     let cart = null
 
@@ -401,8 +401,8 @@ export const clearCartServer = createServerFn({ method: 'POST' }).handler(
 export const mergeCartsOnLogin = createServerFn({ method: 'POST' }).handler(
   async () => {
     const db = getDb()
-    const user = await getCurrentUser()
-    const sessionCartId = await getSessionCartId()
+    const user = getCurrentUser()
+    const sessionCartId = getSessionCartId()
 
     if (!user || !sessionCartId) {
       return

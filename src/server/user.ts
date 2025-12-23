@@ -25,7 +25,7 @@ interface UpdateProfileInput {
  */
 export const getProfile = createServerFn({ method: 'GET' }).handler(async () => {
   const db = getDb()
-  const user = await requireAuth()
+  const user = requireAuth()
 
   const users = await db
     .select({
@@ -53,10 +53,10 @@ export const getProfile = createServerFn({ method: 'GET' }).handler(async () => 
  * Update user profile
  */
 export const updateProfile = createServerFn({ method: 'POST' })
-  .validator((data: UpdateProfileInput) => data)
+  .inputValidator((data: UpdateProfileInput) => data)
   .handler(async ({ data }) => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     await db
       .update(schema.users)
@@ -79,7 +79,7 @@ export const updateProfile = createServerFn({ method: 'POST' })
 export const getAddresses = createServerFn({ method: 'GET' }).handler(
   async () => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     return db
       .select()
@@ -92,7 +92,7 @@ export const getAddresses = createServerFn({ method: 'GET' }).handler(
  * Add a new address
  */
 export const addAddress = createServerFn({ method: 'POST' })
-  .validator((data: AddressInput) => {
+  .inputValidator((data: AddressInput) => {
     if (!data.street || !data.city || !data.postalCode) {
       throw new Error('Address fields required')
     }
@@ -100,7 +100,7 @@ export const addAddress = createServerFn({ method: 'POST' })
   })
   .handler(async ({ data }) => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     // If this is the default address, unset other defaults of the same type
     if (data.isDefault) {
@@ -135,7 +135,7 @@ export const addAddress = createServerFn({ method: 'POST' })
  * Update an address
  */
 export const updateAddress = createServerFn({ method: 'POST' })
-  .validator((data: AddressInput & { id: number }) => {
+  .inputValidator((data: AddressInput & { id: number }) => {
     if (!data.id) throw new Error('Address ID required')
     if (!data.street || !data.city || !data.postalCode) {
       throw new Error('Address fields required')
@@ -144,7 +144,7 @@ export const updateAddress = createServerFn({ method: 'POST' })
   })
   .handler(async ({ data }) => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     // Verify ownership
     const existing = await db
@@ -194,13 +194,13 @@ export const updateAddress = createServerFn({ method: 'POST' })
  * Delete an address
  */
 export const deleteAddress = createServerFn({ method: 'POST' })
-  .validator((addressId: number) => {
+  .inputValidator((addressId: number) => {
     if (!addressId) throw new Error('Address ID required')
     return addressId
   })
   .handler(async ({ data: addressId }) => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     // Verify ownership
     const existing = await db

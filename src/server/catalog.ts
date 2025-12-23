@@ -82,7 +82,7 @@ interface GetProductsResult {
  * Get paginated products with filters
  */
 export const getProducts = createServerFn({ method: 'GET' })
-  .validator((data?: GetProductsInput) => data || {})
+  .inputValidator((data?: GetProductsInput) => data || {})
   .handler(async ({ data }): Promise<GetProductsResult> => {
     const db = getDb()
     const {
@@ -238,7 +238,7 @@ export const getProducts = createServerFn({ method: 'GET' })
  * Get a single product by slug
  */
 export const getProductBySlug = createServerFn({ method: 'GET' })
-  .validator((slug: string) => {
+  .inputValidator((slug: string) => {
     if (!slug) throw new Error('Slug is required')
     return slug
   })
@@ -341,7 +341,7 @@ export const getCategories = createServerFn({ method: 'GET' }).handler(
  * Get a single category by slug with products
  */
 export const getCategoryBySlug = createServerFn({ method: 'GET' })
-  .validator((slug: string) => {
+  .inputValidator((slug: string) => {
     if (!slug) throw new Error('Slug is required')
     return slug
   })
@@ -396,7 +396,7 @@ export const getBrands = createServerFn({ method: 'GET' }).handler(async () => {
  * Search products
  */
 export const searchProducts = createServerFn({ method: 'GET' })
-  .validator((query: string) => {
+  .inputValidator((query: string) => {
     if (!query || query.length < 2) {
       throw new Error('Query must be at least 2 characters')
     }

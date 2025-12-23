@@ -35,7 +35,7 @@ interface AuthResult {
  * Register a new user
  */
 export const register = createServerFn({ method: 'POST' })
-  .validator((data: RegisterInput) => {
+  .inputValidator((data: RegisterInput) => {
     if (!data.email || !data.password) {
       throw new Error('Email et mot de passe requis')
     }
@@ -108,7 +108,7 @@ export const register = createServerFn({ method: 'POST' })
  * Login a user
  */
 export const login = createServerFn({ method: 'POST' })
-  .validator((data: LoginInput) => {
+  .inputValidator((data: LoginInput) => {
     if (!data.email || !data.password) {
       throw new Error('Email et mot de passe requis')
     }
@@ -175,7 +175,7 @@ export const logout = createServerFn({ method: 'POST' }).handler(async () => {
  */
 export const getAuthUser = createServerFn({ method: 'GET' }).handler(
   async (): Promise<SessionUser | null> => {
-    const user = await getCurrentUser()
+    const user = getCurrentUser()
     return user || null
   }
 )
