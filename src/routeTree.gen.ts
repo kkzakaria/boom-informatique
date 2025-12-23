@@ -9,13 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PanierRouteImport } from './routes/panier'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProduitsIndexRouteImport } from './routes/produits/index'
+import { Route as CompteIndexRouteImport } from './routes/compte/index'
+import { Route as CommanderIndexRouteImport } from './routes/commander/index'
+import { Route as ProduitsSlugRouteImport } from './routes/produits/$slug'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
 import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
 import { Route as DemoDrizzleRouteImport } from './routes/demo/drizzle'
+import { Route as CategoriesSlugRouteImport } from './routes/categories/$slug'
+import { Route as AuthInscriptionRouteImport } from './routes/auth/inscription'
+import { Route as AuthConnexionRouteImport } from './routes/auth/connexion'
+import { Route as CompteCommandesIndexRouteImport } from './routes/compte/commandes/index'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
@@ -23,11 +32,18 @@ import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
 import { Route as DemoApiTqTodosRouteImport } from './routes/demo/api.tq-todos'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 import { Route as DemoApiMcpTodosRouteImport } from './routes/demo/api.mcp-todos'
+import { Route as CompteCommandesOrderIdRouteImport } from './routes/compte/commandes/$orderId'
+import { Route as CommanderConfirmationOrderIdRouteImport } from './routes/commander/confirmation.$orderId'
 import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
 import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
+const PanierRoute = PanierRouteImport.update({
+  id: '/panier',
+  path: '/panier',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
@@ -36,6 +52,26 @@ const McpRoute = McpRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProduitsIndexRoute = ProduitsIndexRouteImport.update({
+  id: '/produits/',
+  path: '/produits/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompteIndexRoute = CompteIndexRouteImport.update({
+  id: '/compte/',
+  path: '/compte/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommanderIndexRoute = CommanderIndexRouteImport.update({
+  id: '/commander/',
+  path: '/commander/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProduitsSlugRoute = ProduitsSlugRouteImport.update({
+  id: '/produits/$slug',
+  path: '/produits/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
@@ -61,6 +97,26 @@ const DemoMcpTodosRoute = DemoMcpTodosRouteImport.update({
 const DemoDrizzleRoute = DemoDrizzleRouteImport.update({
   id: '/demo/drizzle',
   path: '/demo/drizzle',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesSlugRoute = CategoriesSlugRouteImport.update({
+  id: '/categories/$slug',
+  path: '/categories/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthInscriptionRoute = AuthInscriptionRouteImport.update({
+  id: '/auth/inscription',
+  path: '/auth/inscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthConnexionRoute = AuthConnexionRouteImport.update({
+  id: '/auth/connexion',
+  path: '/auth/connexion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompteCommandesIndexRoute = CompteCommandesIndexRouteImport.update({
+  id: '/compte/commandes/',
+  path: '/compte/commandes/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
@@ -98,6 +154,17 @@ const DemoApiMcpTodosRoute = DemoApiMcpTodosRouteImport.update({
   path: '/demo/api/mcp-todos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompteCommandesOrderIdRoute = CompteCommandesOrderIdRouteImport.update({
+  id: '/compte/commandes/$orderId',
+  path: '/compte/commandes/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommanderConfirmationOrderIdRoute =
+  CommanderConfirmationOrderIdRouteImport.update({
+    id: '/commander/confirmation/$orderId',
+    path: '/commander/confirmation/$orderId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
   id: '/demo/start/ssr/',
   path: '/demo/start/ssr/',
@@ -122,11 +189,21 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/mcp': typeof McpRoute
+  '/panier': typeof PanierRoute
+  '/auth/connexion': typeof AuthConnexionRoute
+  '/auth/inscription': typeof AuthInscriptionRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/produits/$slug': typeof ProduitsSlugRoute
+  '/commander': typeof CommanderIndexRoute
+  '/compte': typeof CompteIndexRoute
+  '/produits': typeof ProduitsIndexRoute
+  '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
+  '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -134,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/compte/commandes': typeof CompteCommandesIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -142,11 +220,21 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/mcp': typeof McpRoute
+  '/panier': typeof PanierRoute
+  '/auth/connexion': typeof AuthConnexionRoute
+  '/auth/inscription': typeof AuthInscriptionRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/produits/$slug': typeof ProduitsSlugRoute
+  '/commander': typeof CommanderIndexRoute
+  '/compte': typeof CompteIndexRoute
+  '/produits': typeof ProduitsIndexRoute
+  '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
+  '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -154,6 +242,7 @@ export interface FileRoutesByTo {
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/compte/commandes': typeof CompteCommandesIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -163,11 +252,21 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/mcp': typeof McpRoute
+  '/panier': typeof PanierRoute
+  '/auth/connexion': typeof AuthConnexionRoute
+  '/auth/inscription': typeof AuthInscriptionRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/produits/$slug': typeof ProduitsSlugRoute
+  '/commander/': typeof CommanderIndexRoute
+  '/compte/': typeof CompteIndexRoute
+  '/produits/': typeof ProduitsIndexRoute
+  '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
+  '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -175,6 +274,7 @@ export interface FileRoutesById {
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/compte/commandes/': typeof CompteCommandesIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -185,11 +285,21 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/mcp'
+    | '/panier'
+    | '/auth/connexion'
+    | '/auth/inscription'
+    | '/categories/$slug'
     | '/demo/drizzle'
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/produits/$slug'
+    | '/commander'
+    | '/compte'
+    | '/produits'
+    | '/commander/confirmation/$orderId'
+    | '/compte/commandes/$orderId'
     | '/demo/api/mcp-todos'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -197,6 +307,7 @@ export interface FileRouteTypes {
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/compte/commandes'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -205,11 +316,21 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/mcp'
+    | '/panier'
+    | '/auth/connexion'
+    | '/auth/inscription'
+    | '/categories/$slug'
     | '/demo/drizzle'
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/produits/$slug'
+    | '/commander'
+    | '/compte'
+    | '/produits'
+    | '/commander/confirmation/$orderId'
+    | '/compte/commandes/$orderId'
     | '/demo/api/mcp-todos'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -217,6 +338,7 @@ export interface FileRouteTypes {
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/compte/commandes'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -225,11 +347,21 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/mcp'
+    | '/panier'
+    | '/auth/connexion'
+    | '/auth/inscription'
+    | '/categories/$slug'
     | '/demo/drizzle'
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/produits/$slug'
+    | '/commander/'
+    | '/compte/'
+    | '/produits/'
+    | '/commander/confirmation/$orderId'
+    | '/compte/commandes/$orderId'
     | '/demo/api/mcp-todos'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -237,6 +369,7 @@ export interface FileRouteTypes {
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/compte/commandes/'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -246,11 +379,21 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   McpRoute: typeof McpRoute
+  PanierRoute: typeof PanierRoute
+  AuthConnexionRoute: typeof AuthConnexionRoute
+  AuthInscriptionRoute: typeof AuthInscriptionRoute
+  CategoriesSlugRoute: typeof CategoriesSlugRoute
   DemoDrizzleRoute: typeof DemoDrizzleRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  ProduitsSlugRoute: typeof ProduitsSlugRoute
+  CommanderIndexRoute: typeof CommanderIndexRoute
+  CompteIndexRoute: typeof CompteIndexRoute
+  ProduitsIndexRoute: typeof ProduitsIndexRoute
+  CommanderConfirmationOrderIdRoute: typeof CommanderConfirmationOrderIdRoute
+  CompteCommandesOrderIdRoute: typeof CompteCommandesOrderIdRoute
   DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoApiTqTodosRoute: typeof DemoApiTqTodosRoute
@@ -258,6 +401,7 @@ export interface RootRouteChildren {
   DemoFormSimpleRoute: typeof DemoFormSimpleRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
+  CompteCommandesIndexRoute: typeof CompteCommandesIndexRoute
   DemoStartSsrDataOnlyRoute: typeof DemoStartSsrDataOnlyRoute
   DemoStartSsrFullSsrRoute: typeof DemoStartSsrFullSsrRoute
   DemoStartSsrSpaModeRoute: typeof DemoStartSsrSpaModeRoute
@@ -266,6 +410,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/panier': {
+      id: '/panier'
+      path: '/panier'
+      fullPath: '/panier'
+      preLoaderRoute: typeof PanierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mcp': {
       id: '/mcp'
       path: '/mcp'
@@ -278,6 +429,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produits/': {
+      id: '/produits/'
+      path: '/produits'
+      fullPath: '/produits'
+      preLoaderRoute: typeof ProduitsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compte/': {
+      id: '/compte/'
+      path: '/compte'
+      fullPath: '/compte'
+      preLoaderRoute: typeof CompteIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commander/': {
+      id: '/commander/'
+      path: '/commander'
+      fullPath: '/commander'
+      preLoaderRoute: typeof CommanderIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produits/$slug': {
+      id: '/produits/$slug'
+      path: '/produits/$slug'
+      fullPath: '/produits/$slug'
+      preLoaderRoute: typeof ProduitsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/tanstack-query': {
@@ -313,6 +492,34 @@ declare module '@tanstack/react-router' {
       path: '/demo/drizzle'
       fullPath: '/demo/drizzle'
       preLoaderRoute: typeof DemoDrizzleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories/$slug': {
+      id: '/categories/$slug'
+      path: '/categories/$slug'
+      fullPath: '/categories/$slug'
+      preLoaderRoute: typeof CategoriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/inscription': {
+      id: '/auth/inscription'
+      path: '/auth/inscription'
+      fullPath: '/auth/inscription'
+      preLoaderRoute: typeof AuthInscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/connexion': {
+      id: '/auth/connexion'
+      path: '/auth/connexion'
+      fullPath: '/auth/connexion'
+      preLoaderRoute: typeof AuthConnexionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compte/commandes/': {
+      id: '/compte/commandes/'
+      path: '/compte/commandes'
+      fullPath: '/compte/commandes'
+      preLoaderRoute: typeof CompteCommandesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/start/server-funcs': {
@@ -364,6 +571,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoApiMcpTodosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compte/commandes/$orderId': {
+      id: '/compte/commandes/$orderId'
+      path: '/compte/commandes/$orderId'
+      fullPath: '/compte/commandes/$orderId'
+      preLoaderRoute: typeof CompteCommandesOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commander/confirmation/$orderId': {
+      id: '/commander/confirmation/$orderId'
+      path: '/commander/confirmation/$orderId'
+      fullPath: '/commander/confirmation/$orderId'
+      preLoaderRoute: typeof CommanderConfirmationOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/start/ssr/': {
       id: '/demo/start/ssr/'
       path: '/demo/start/ssr'
@@ -398,11 +619,21 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   McpRoute: McpRoute,
+  PanierRoute: PanierRoute,
+  AuthConnexionRoute: AuthConnexionRoute,
+  AuthInscriptionRoute: AuthInscriptionRoute,
+  CategoriesSlugRoute: CategoriesSlugRoute,
   DemoDrizzleRoute: DemoDrizzleRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  ProduitsSlugRoute: ProduitsSlugRoute,
+  CommanderIndexRoute: CommanderIndexRoute,
+  CompteIndexRoute: CompteIndexRoute,
+  ProduitsIndexRoute: ProduitsIndexRoute,
+  CommanderConfirmationOrderIdRoute: CommanderConfirmationOrderIdRoute,
+  CompteCommandesOrderIdRoute: CompteCommandesOrderIdRoute,
   DemoApiMcpTodosRoute: DemoApiMcpTodosRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoApiTqTodosRoute: DemoApiTqTodosRoute,
@@ -410,6 +641,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoFormSimpleRoute: DemoFormSimpleRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
+  CompteCommandesIndexRoute: CompteCommandesIndexRoute,
   DemoStartSsrDataOnlyRoute: DemoStartSsrDataOnlyRoute,
   DemoStartSsrFullSsrRoute: DemoStartSsrFullSsrRoute,
   DemoStartSsrSpaModeRoute: DemoStartSsrSpaModeRoute,

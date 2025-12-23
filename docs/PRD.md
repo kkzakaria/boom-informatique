@@ -471,12 +471,12 @@ acceptQuote(quoteId)
 
 ### Phase 1 - MVP (V1.0)
 - [x] Setup projet TanStack Start
-- [ ] Modèle de données Drizzle
-- [ ] Authentification (inscription, connexion)
-- [ ] Catalogue produits (liste, fiche, recherche)
-- [ ] Panier
-- [ ] Processus de commande
-- [ ] Espace client basique
+- [x] Modèle de données Drizzle (16 tables)
+- [x] Authentification (inscription, connexion, sessions HTTP-only)
+- [x] Catalogue produits (liste, fiche, recherche, filtres)
+- [x] Panier (localStorage + sync serveur)
+- [x] Processus de commande (checkout complet)
+- [x] Espace client basique (dashboard, commandes, adresses)
 
 ### Phase 2 - B2B & Admin (V1.1)
 - [ ] Comptes professionnels
@@ -503,20 +503,20 @@ acceptQuote(quoteId)
 ## 7. Critères d'acceptation V1.0
 
 ### Catalogue
-- [ ] Affichage de minimum 3 catégories avec produits
-- [ ] Recherche fonctionnelle avec résultats pertinents
-- [ ] Filtres par catégorie, marque, prix
-- [ ] Fiche produit complète avec images
+- [x] Affichage de minimum 3 catégories avec produits
+- [x] Recherche fonctionnelle avec résultats pertinents
+- [x] Filtres par catégorie, marque, prix
+- [x] Fiche produit complète avec images
 
 ### Utilisateurs
-- [ ] Inscription/Connexion fonctionnelle
-- [ ] Profil éditable avec adresses
-- [ ] Historique des commandes accessible
+- [x] Inscription/Connexion fonctionnelle
+- [x] Profil éditable avec adresses
+- [x] Historique des commandes accessible
 
 ### Commandes
-- [ ] Ajout/modification panier fluide
-- [ ] Tunnel de commande en 4 étapes
-- [ ] Choix retrait/livraison
+- [x] Ajout/modification panier fluide
+- [x] Tunnel de commande en 4 étapes
+- [x] Choix retrait/livraison
 - [ ] Confirmation par email
 
 ### Admin
@@ -547,4 +547,5 @@ acceptQuote(quoteId)
 ---
 
 *Document créé le 23 décembre 2025*
-*Version : 1.0*
+*Dernière mise à jour : 23 décembre 2025*
+*Version : 1.0.0 - Phase 1 MVP Complete*
