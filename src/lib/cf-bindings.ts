@@ -1,4 +1,4 @@
-import { getEvent } from 'vinxi/http'
+import { env } from 'cloudflare:workers'
 
 /**
  * Cloudflare bindings interface
@@ -13,27 +13,11 @@ export interface CloudflareBindings {
 }
 
 /**
- * Get Cloudflare bindings from the request context
+ * Get Cloudflare bindings from cloudflare:workers
  * Must be called within a server function
  */
 export function getBindings(): CloudflareBindings {
-  const event = getEvent()
-
-  // In Cloudflare Workers, bindings are available in cf.env
-  const env = (event.context as { cloudflare?: { env: CloudflareBindings } })?.cloudflare?.env
-
-  if (!env) {
-    // Development fallback - check if we're in local dev mode
-    if (process.env.NODE_ENV === 'development') {
-      throw new Error(
-        'Cloudflare bindings not available. ' +
-        'Make sure you run the app with `wrangler dev` or have local D1 configured.'
-      )
-    }
-    throw new Error('Cloudflare bindings not found in request context')
-  }
-
-  return env
+  return env as unknown as CloudflareBindings
 }
 
 /**

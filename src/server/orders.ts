@@ -59,7 +59,7 @@ interface CreateOrderInput {
  * Create a new order from cart
  */
 export const createOrder = createServerFn({ method: 'POST' })
-  .validator((data: CreateOrderInput) => {
+  .inputValidator((data: CreateOrderInput) => {
     if (!data.shippingAddressId || !data.billingAddressId) {
       throw new Error('Addresses required')
     }
@@ -73,7 +73,7 @@ export const createOrder = createServerFn({ method: 'POST' })
   })
   .handler(async ({ data }) => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     // Get user's cart
     const cart = await db
@@ -218,7 +218,7 @@ export const createOrder = createServerFn({ method: 'POST' })
 export const getUserOrders = createServerFn({ method: 'GET' }).handler(
   async () => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     const orders = await db
       .select()
@@ -234,13 +234,13 @@ export const getUserOrders = createServerFn({ method: 'GET' }).handler(
  * Get a specific order by ID
  */
 export const getOrder = createServerFn({ method: 'GET' })
-  .validator((orderId: number) => {
+  .inputValidator((orderId: number) => {
     if (!orderId) throw new Error('Order ID required')
     return orderId
   })
   .handler(async ({ data: orderId }): Promise<OrderWithItems | null> => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     const orders = await db
       .select()
@@ -314,13 +314,13 @@ export const getOrder = createServerFn({ method: 'GET' })
  * Cancel an order (only if pending)
  */
 export const cancelOrder = createServerFn({ method: 'POST' })
-  .validator((orderId: number) => {
+  .inputValidator((orderId: number) => {
     if (!orderId) throw new Error('Order ID required')
     return orderId
   })
   .handler(async ({ data: orderId }) => {
     const db = getDb()
-    const user = await requireAuth()
+    const user = requireAuth()
 
     const orders = await db
       .select()
