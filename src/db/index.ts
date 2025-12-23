@@ -1,5 +1,10 @@
-import { drizzle } from 'drizzle-orm/node-postgres'
+import { drizzle } from 'drizzle-orm/d1'
+import * as schema from './schema'
 
-import * as schema from './schema.ts'
+export type Database = ReturnType<typeof createDb>
 
-export const db = drizzle(process.env.DATABASE_URL!, { schema })
+export function createDb(d1: D1Database) {
+  return drizzle(d1, { schema })
+}
+
+export { schema }

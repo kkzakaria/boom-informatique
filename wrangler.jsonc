@@ -1,7 +1,40 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tanstack-start-app",
-  "compatibility_date": "2025-09-02",
+  "name": "boom-informatique",
+  "compatibility_date": "2024-12-23",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry"
+  "main": "@tanstack/react-start/server-entry",
+
+  // Base de données D1
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "boom-informatique-db",
+      "database_id": "" // À remplir après création avec: wrangler d1 create boom-informatique-db
+    }
+  ],
+
+  // Stockage R2
+  "r2_buckets": [
+    {
+      "binding": "ASSETS_BUCKET",
+      "bucket_name": "boom-informatique-assets"
+      // À créer avec: wrangler r2 bucket create boom-informatique-assets
+    },
+    {
+      "binding": "DOCS_BUCKET",
+      "bucket_name": "boom-informatique-docs"
+      // À créer avec: wrangler r2 bucket create boom-informatique-docs
+    }
+  ],
+
+  // Variables d'environnement
+  "vars": {
+    "ENVIRONMENT": "production"
+  },
+
+  // Configuration pour le développement local
+  "dev": {
+    "port": 3000
+  }
 }
