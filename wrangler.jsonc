@@ -1,40 +1,52 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "boom-informatique",
-  "compatibility_date": "2025-12-23",
-  "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry",
-
-  // Base de données D1
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "boom-informatique-db",
-      "database_id": "" // À remplir après création avec: wrangler d1 create boom-informatique-db
-    }
-  ],
-
-  // Stockage R2
-  "r2_buckets": [
-    {
-      "binding": "ASSETS_BUCKET",
-      "bucket_name": "boom-informatique-assets"
-      // À créer avec: wrangler r2 bucket create boom-informatique-assets
-    },
-    {
-      "binding": "DOCS_BUCKET",
-      "bucket_name": "boom-informatique-docs"
-      // À créer avec: wrangler r2 bucket create boom-informatique-docs
-    }
-  ],
-
-  // Variables d'environnement
-  "vars": {
-    "ENVIRONMENT": "production"
-  },
-
-  // Configuration pour le développement local
-  "dev": {
-    "port": 3000
-  }
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "boom-informatique",
+	"compatibility_date": "2025-12-23",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"main": "@tanstack/react-start/server-entry",
+	// Base de données D1
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "boom-informatique-db",
+			"database_id": "783f7256-c52e-4daf-8c53-a5b543c6caab" // À remplir après création avec: wrangler d1 create boom-informatique-db
+		},
+		{
+			"binding": "boom_informatique_db",
+			"database_name": "boom-informatique-db",
+			"database_id": "783f7256-c52e-4daf-8c53-a5b543c6caab"
+		}
+	],
+	// Stockage R2
+	"r2_buckets": [
+		{
+			"binding": "ASSETS_BUCKET",
+			"bucket_name": "boom-informatique-assets"
+			// À créer avec: wrangler r2 bucket create boom-informatique-assets
+		},
+		{
+			"binding": "DOCS_BUCKET",
+			"bucket_name": "boom-informatique-docs"
+			// À créer avec: wrangler r2 bucket create boom-informatique-docs
+		},
+		{
+			"bucket_name": "boom-informatique-assets",
+			"binding": "boom_informatique_assets"
+		},
+		{
+			"bucket_name": "boom-informatique-docs",
+			"binding": "boom_informatique_docs"
+		}
+	],
+	// Variables d'environnement
+	"vars": {
+		"ENVIRONMENT": "production",
+		"SESSION_SECRET": "" // À configurer avec: wrangler secret put SESSION_SECRET
+	},
+	// Configuration pour le développement local
+	"dev": {
+		"port": 3300
+	}
 }

@@ -10,7 +10,7 @@ echo ""
 
 # Création de la base de données D1
 echo "1. Création de la base de données D1..."
-DB_OUTPUT=$(wrangler d1 create boom-informatique-db 2>&1) || true
+DB_OUTPUT=$(npx wrangler d1 create boom-informatique-db 2>&1) || true
 echo "$DB_OUTPUT"
 
 # Extraction de l'ID de la base de données
@@ -27,10 +27,10 @@ echo ""
 # Création des buckets R2
 echo "2. Création des buckets R2..."
 echo "   - Bucket assets (images produits, logos)..."
-wrangler r2 bucket create boom-informatique-assets 2>&1 || echo "   Le bucket existe peut-être déjà"
+npx wrangler r2 bucket create boom-informatique-assets 2>&1 || echo "   Le bucket existe peut-être déjà"
 
 echo "   - Bucket docs (devis, factures PDF)..."
-wrangler r2 bucket create boom-informatique-docs 2>&1 || echo "   Le bucket existe peut-être déjà"
+npx wrangler r2 bucket create boom-informatique-docs 2>&1 || echo "   Le bucket existe peut-être déjà"
 echo ""
 
 # Affichage des prochaines étapes
