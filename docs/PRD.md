@@ -546,5 +546,5 @@ acceptQuote(quoteId)
 
 ---
 
-*Document créé le 23 décembre 2024*
+*Document créé le 23 décembre 2025*
 *Version : 1.0*
