@@ -3,13 +3,13 @@ import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-q
 import {
   getQuoteById,
   sendQuote,
-  updateQuoteStatus,
   convertQuoteToOrder,
 } from '@/server/quotes'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { QuoteStatusBadge } from '@/components/quotes/QuoteStatusBadge'
 import { formatPrice } from '@/lib/utils'
+import { downloadQuotePdf } from '@/lib/pdf'
 import {
   ArrowLeft,
   Send,
@@ -20,6 +20,7 @@ import {
   Mail,
   Clock,
   Calendar,
+  Download,
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -62,6 +63,36 @@ function AdminQuoteDetailPage() {
 
   const canSend = quote.status === 'draft'
   const canConvert = quote.status === 'accepted'
+
+  const handleDownloadPdf = () => {
+    const pdfData = {
+      quoteNumber: quote.quoteNumber,
+      date: new Date(quote.createdAt || Date.now()),
+      validUntil: quote.validUntil ? new Date(quote.validUntil) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      customer: {
+        name: quote.customer?.firstName && quote.customer?.lastName
+          ? `${quote.customer.firstName} ${quote.customer.lastName}`
+          : quote.customer?.email || 'Client',
+        company: quote.customer?.companyName || undefined,
+        email: quote.customer?.email || '',
+      },
+      items: quote.items.map((item) => ({
+        description: item.productName,
+        reference: item.productSku,
+        quantity: item.quantity,
+        unitPrice: item.unitPriceHt,
+        discount: item.discountRate || undefined,
+        total: item.unitPriceHt * item.quantity * (1 - (item.discountRate || 0) / 100),
+      })),
+      subtotalHt: quote.subtotalHt,
+      discountAmount: quote.discountAmount || undefined,
+      taxAmount: quote.taxAmount,
+      totalHt: quote.totalHt,
+      totalTtc: quote.totalHt * 1.2,
+      notes: quote.notes || undefined,
+    }
+    downloadQuotePdf(pdfData)
+  }
 
   return (
     <div className="space-y-6">
@@ -259,6 +290,18 @@ function AdminQuoteDetailPage() {
           <div className="rounded-[--radius-lg] border border-[--border-default] bg-[--bg-card] p-5">
             <h2 className="font-semibold text-[--text-primary]">Actions</h2>
 
+            {/* Always show PDF download */}
+            <div className="mt-4">
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleDownloadPdf}
+              >
+                <Download className="h-4 w-4" />
+                Télécharger PDF
+              </Button>
+            </div>
+
             {canSend && (
               <div className="mt-4 space-y-4">
                 <div>
@@ -308,11 +351,6 @@ function AdminQuoteDetailPage() {
               </div>
             )}
 
-            {!canSend && !canConvert && (
-              <p className="mt-4 text-sm text-[--text-muted]">
-                Aucune action disponible pour ce devis.
-              </p>
-            )}
           </div>
         </div>
       </div>

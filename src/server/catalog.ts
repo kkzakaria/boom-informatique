@@ -40,6 +40,10 @@ export interface ProductWithDetails {
     name: string
     value: string
   }>
+  rating: {
+    average: number
+    count: number
+  }
 }
 
 export interface CategoryWithProducts {
@@ -190,7 +194,7 @@ export const getProducts = createServerFn({ method: 'GET' })
     // Get related data for each product
     const productsWithDetails: ProductWithDetails[] = await Promise.all(
       products.map(async (product) => {
-        const [brand, category, images, attributes] = await Promise.all([
+        const [brand, category, images, attributes, ratingStats] = await Promise.all([
           product.brandId
             ? db
                 .select()
@@ -214,6 +218,18 @@ export const getProducts = createServerFn({ method: 'GET' })
             .select()
             .from(schema.productAttributes)
             .where(eq(schema.productAttributes.productId, product.id)),
+          db
+            .select({
+              average: sql<number>`COALESCE(AVG(rating), 0)`,
+              count: sql<number>`count(*)`,
+            })
+            .from(schema.reviews)
+            .where(
+              and(
+                eq(schema.reviews.productId, product.id),
+                eq(schema.reviews.isApproved, true)
+              )
+            ),
         ])
 
         return {
@@ -222,6 +238,10 @@ export const getProducts = createServerFn({ method: 'GET' })
           category: category[0] || null,
           images,
           attributes,
+          rating: {
+            average: Math.round((ratingStats[0]?.average || 0) * 10) / 10,
+            count: ratingStats[0]?.count || 0,
+          },
         }
       })
     )
@@ -257,7 +277,7 @@ export const getProductBySlug = createServerFn({ method: 'GET' })
 
     const product = products[0]
 
-    const [brand, category, images, attributes] = await Promise.all([
+    const [brand, category, images, attributes, ratingStats] = await Promise.all([
       product.brandId
         ? db
             .select()
@@ -281,6 +301,18 @@ export const getProductBySlug = createServerFn({ method: 'GET' })
         .select()
         .from(schema.productAttributes)
         .where(eq(schema.productAttributes.productId, product.id)),
+      db
+        .select({
+          average: sql<number>`COALESCE(AVG(rating), 0)`,
+          count: sql<number>`count(*)`,
+        })
+        .from(schema.reviews)
+        .where(
+          and(
+            eq(schema.reviews.productId, product.id),
+            eq(schema.reviews.isApproved, true)
+          )
+        ),
     ])
 
     return {
@@ -289,6 +321,10 @@ export const getProductBySlug = createServerFn({ method: 'GET' })
       category: category[0] || null,
       images,
       attributes,
+      rating: {
+        average: Math.round((ratingStats[0]?.average || 0) * 10) / 10,
+        count: ratingStats[0]?.count || 0,
+      },
     }
   })
 

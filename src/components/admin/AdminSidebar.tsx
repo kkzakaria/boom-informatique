@@ -10,6 +10,8 @@ import {
   Settings,
   ChevronLeft,
   Menu,
+  MessageSquare,
+  TrendingUp,
 } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
@@ -28,6 +30,8 @@ const navItems: NavItem[] = [
   { label: 'Clients', href: '/admin/clients', icon: Users },
   { label: 'Devis', href: '/admin/devis', icon: FileText },
   { label: 'Stock', href: '/admin/stock', icon: BarChart3 },
+  { label: 'Avis', href: '/admin/avis', icon: MessageSquare },
+  { label: 'Statistiques', href: '/admin/stats', icon: TrendingUp },
 ]
 
 interface AdminSidebarProps {

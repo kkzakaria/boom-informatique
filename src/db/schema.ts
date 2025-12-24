@@ -257,3 +257,21 @@ export const stockMovements = sqliteTable('stock_movements', {
     () => new Date()
   ),
 })
+
+export const reviews = sqliteTable('reviews', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  productId: integer('product_id')
+    .notNull()
+    .references(() => products.id, { onDelete: 'cascade' }),
+  rating: integer('rating').notNull(),
+  title: text('title'),
+  content: text('content'),
+  isVerifiedPurchase: integer('is_verified_purchase', { mode: 'boolean' }).default(false),
+  isApproved: integer('is_approved', { mode: 'boolean' }).default(true),
+  createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(
+    () => new Date()
+  ),
+})

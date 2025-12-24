@@ -4,7 +4,8 @@ import { useRequireAuth } from '@/hooks/useAuth'
 import { getOrder, cancelOrder } from '@/server/orders'
 import { Button } from '@/components/ui/Button'
 import { formatPrice } from '@/lib/utils'
-import { ChevronRight, Package, Printer, X, Clock, CheckCircle } from 'lucide-react'
+import { downloadInvoicePdf } from '@/lib/pdf'
+import { ChevronRight, Package, Download, X, Clock, CheckCircle } from 'lucide-react'
 
 export const Route = createFileRoute('/compte/commandes/$orderId')({
   loader: async ({ context: { queryClient }, params }) => {
@@ -79,6 +80,34 @@ function OrderDetailPage() {
   }
 
   const canCancel = order.status === 'pending'
+  const canDownloadInvoice = order.paymentStatus === 'paid'
+
+  const handleDownloadInvoice = () => {
+    const invoiceData = {
+      invoiceNumber: `F-${order.orderNumber}`,
+      orderNumber: order.orderNumber,
+      date: new Date(order.createdAt || Date.now()),
+      customer: {
+        name: 'Client',
+        email: '',
+      },
+      items: order.items.map((item) => ({
+        description: item.productName,
+        reference: item.productSku,
+        quantity: item.quantity,
+        unitPrice: item.unitPriceHt,
+        total: item.unitPriceHt * item.quantity,
+      })),
+      subtotalHt: order.subtotalHt,
+      shippingCost: order.shippingCost,
+      taxAmount: order.taxAmount,
+      totalTtc: order.totalTtc,
+      paymentMethod: order.paymentMethod,
+      paymentStatus: order.paymentStatus as 'pending' | 'paid' | 'refunded',
+      notes: order.notes || undefined,
+    }
+    downloadInvoicePdf(invoiceData)
+  }
 
   return (
     <div className="container py-8">
@@ -111,10 +140,12 @@ function OrderDetailPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">
-            <Printer className="h-4 w-4" />
-            Imprimer
-          </Button>
+          {canDownloadInvoice && (
+            <Button variant="outline" size="sm" onClick={handleDownloadInvoice}>
+              <Download className="h-4 w-4" />
+              Télécharger facture
+            </Button>
+          )}
           {canCancel && (
             <Button
               variant="destructive"

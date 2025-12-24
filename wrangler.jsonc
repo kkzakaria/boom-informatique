@@ -43,7 +43,8 @@
 	// Variables d'environnement
 	"vars": {
 		"ENVIRONMENT": "production",
-		"SESSION_SECRET": "" // À configurer avec: wrangler secret put SESSION_SECRET
+		"SESSION_SECRET": "", // À configurer avec: wrangler secret put SESSION_SECRET
+		"RESEND_API_KEY": "" // À configurer avec: wrangler secret put RESEND_API_KEY
 	},
 	// Configuration pour le développement local
 	"dev": {
