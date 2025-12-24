@@ -28,12 +28,13 @@ export const Route = createFileRoute('/admin/devis/')({
     page: Number(search.page) || 1,
   }),
   loader: async ({ context: { queryClient }, search }) => {
+    const safeSearch = search || { status: 'all', page: 1 }
     await queryClient.ensureQueryData({
-      queryKey: ['admin', 'quotes', search],
+      queryKey: ['admin', 'quotes', safeSearch],
       queryFn: () =>
         getAllQuotes({
-          status: search.status === 'all' ? undefined : search.status,
-          page: search.page,
+          status: safeSearch.status === 'all' ? undefined : safeSearch.status,
+          page: safeSearch.page,
         }),
     })
   },

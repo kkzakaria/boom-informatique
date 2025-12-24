@@ -163,7 +163,13 @@ export const getMyQuotes = createServerFn({ method: 'GET' }).handler(async () =>
  * Get a specific quote by ID
  */
 export const getQuoteById = createServerFn({ method: 'GET' })
-  .inputValidator((quoteId: number) => quoteId)
+  .inputValidator((quoteId: number | undefined) => {
+    const id = Number(quoteId)
+    if (!id || isNaN(id)) {
+      throw new Error('Valid quote ID is required')
+    }
+    return id
+  })
   .handler(async ({ data: quoteId }) => {
     const user = getCurrentUser()
     const db = getDb()
@@ -309,14 +315,21 @@ export const rejectQuote = createServerFn({ method: 'POST' })
  */
 export const getAllQuotes = createServerFn({ method: 'GET' })
   .inputValidator(
-    (filters: { status?: string; page?: number; limit?: number } = {}) => filters
+    (filters: { status?: string; page?: number; limit?: number } | undefined) => {
+      const safeFilters = filters || {}
+      return {
+        status: safeFilters.status,
+        page: safeFilters.page || 1,
+        limit: safeFilters.limit || 20,
+      }
+    }
   )
   .handler(async ({ data: filters }) => {
     requireAdmin()
     const db = getDb()
 
-    const page = filters.page || 1
-    const limit = filters.limit || 20
+    const page = filters.page
+    const limit = filters.limit
     const offset = (page - 1) * limit
 
     let query = db
