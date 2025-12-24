@@ -11,17 +11,32 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProduitsIndexRouteImport } from './routes/produits/index'
 import { Route as CompteIndexRouteImport } from './routes/compte/index'
 import { Route as CommanderIndexRouteImport } from './routes/commander/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as ProduitsSlugRouteImport } from './routes/produits/$slug'
 import { Route as CategoriesSlugRouteImport } from './routes/categories/$slug'
 import { Route as AuthInscriptionRouteImport } from './routes/auth/inscription'
 import { Route as AuthConnexionRouteImport } from './routes/auth/connexion'
+import { Route as CompteDevisIndexRouteImport } from './routes/compte/devis/index'
 import { Route as CompteCommandesIndexRouteImport } from './routes/compte/commandes/index'
+import { Route as AdminStockIndexRouteImport } from './routes/admin/stock/index'
+import { Route as AdminProduitsIndexRouteImport } from './routes/admin/produits/index'
+import { Route as AdminDevisIndexRouteImport } from './routes/admin/devis/index'
+import { Route as AdminCommandesIndexRouteImport } from './routes/admin/commandes/index'
+import { Route as AdminClientsIndexRouteImport } from './routes/admin/clients/index'
+import { Route as CompteDevisQuoteIdRouteImport } from './routes/compte/devis/$quoteId'
 import { Route as CompteCommandesOrderIdRouteImport } from './routes/compte/commandes/$orderId'
 import { Route as CommanderConfirmationOrderIdRouteImport } from './routes/commander/confirmation.$orderId'
+import { Route as AdminProduitsNouveauRouteImport } from './routes/admin/produits/nouveau'
+import { Route as AdminProduitsProductIdRouteImport } from './routes/admin/produits/$productId'
+import { Route as AdminDevisQuoteIdRouteImport } from './routes/admin/devis/$quoteId'
+import { Route as AdminCommandesOrderIdRouteImport } from './routes/admin/commandes/$orderId'
+import { Route as AdminClientsEnAttenteRouteImport } from './routes/admin/clients/en-attente'
+import { Route as AdminClientsUserIdRouteImport } from './routes/admin/clients/$userId'
 
 const PanierRoute = PanierRouteImport.update({
   id: '/panier',
@@ -31,6 +46,11 @@ const PanierRoute = PanierRouteImport.update({
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +73,11 @@ const CommanderIndexRoute = CommanderIndexRouteImport.update({
   path: '/commander/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ProduitsSlugRoute = ProduitsSlugRouteImport.update({
   id: '/produits/$slug',
   path: '/produits/$slug',
@@ -73,9 +98,44 @@ const AuthConnexionRoute = AuthConnexionRouteImport.update({
   path: '/auth/connexion',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompteDevisIndexRoute = CompteDevisIndexRouteImport.update({
+  id: '/compte/devis/',
+  path: '/compte/devis/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompteCommandesIndexRoute = CompteCommandesIndexRouteImport.update({
   id: '/compte/commandes/',
   path: '/compte/commandes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStockIndexRoute = AdminStockIndexRouteImport.update({
+  id: '/stock/',
+  path: '/stock/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProduitsIndexRoute = AdminProduitsIndexRouteImport.update({
+  id: '/produits/',
+  path: '/produits/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDevisIndexRoute = AdminDevisIndexRouteImport.update({
+  id: '/devis/',
+  path: '/devis/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCommandesIndexRoute = AdminCommandesIndexRouteImport.update({
+  id: '/commandes/',
+  path: '/commandes/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminClientsIndexRoute = AdminClientsIndexRouteImport.update({
+  id: '/clients/',
+  path: '/clients/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const CompteDevisQuoteIdRoute = CompteDevisQuoteIdRouteImport.update({
+  id: '/compte/devis/$quoteId',
+  path: '/compte/devis/$quoteId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompteCommandesOrderIdRoute = CompteCommandesOrderIdRouteImport.update({
@@ -89,21 +149,66 @@ const CommanderConfirmationOrderIdRoute =
     path: '/commander/confirmation/$orderId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminProduitsNouveauRoute = AdminProduitsNouveauRouteImport.update({
+  id: '/produits/nouveau',
+  path: '/produits/nouveau',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProduitsProductIdRoute = AdminProduitsProductIdRouteImport.update({
+  id: '/produits/$productId',
+  path: '/produits/$productId',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDevisQuoteIdRoute = AdminDevisQuoteIdRouteImport.update({
+  id: '/devis/$quoteId',
+  path: '/devis/$quoteId',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCommandesOrderIdRoute = AdminCommandesOrderIdRouteImport.update({
+  id: '/commandes/$orderId',
+  path: '/commandes/$orderId',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminClientsEnAttenteRoute = AdminClientsEnAttenteRouteImport.update({
+  id: '/clients/en-attente',
+  path: '/clients/en-attente',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminClientsUserIdRoute = AdminClientsUserIdRouteImport.update({
+  id: '/clients/$userId',
+  path: '/clients/$userId',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/mcp': typeof McpRoute
   '/panier': typeof PanierRoute
   '/auth/connexion': typeof AuthConnexionRoute
   '/auth/inscription': typeof AuthInscriptionRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/produits/$slug': typeof ProduitsSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/commander': typeof CommanderIndexRoute
   '/compte': typeof CompteIndexRoute
   '/produits': typeof ProduitsIndexRoute
+  '/admin/clients/$userId': typeof AdminClientsUserIdRoute
+  '/admin/clients/en-attente': typeof AdminClientsEnAttenteRoute
+  '/admin/commandes/$orderId': typeof AdminCommandesOrderIdRoute
+  '/admin/devis/$quoteId': typeof AdminDevisQuoteIdRoute
+  '/admin/produits/$productId': typeof AdminProduitsProductIdRoute
+  '/admin/produits/nouveau': typeof AdminProduitsNouveauRoute
   '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
   '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
+  '/compte/devis/$quoteId': typeof CompteDevisQuoteIdRoute
+  '/admin/clients': typeof AdminClientsIndexRoute
+  '/admin/commandes': typeof AdminCommandesIndexRoute
+  '/admin/devis': typeof AdminDevisIndexRoute
+  '/admin/produits': typeof AdminProduitsIndexRoute
+  '/admin/stock': typeof AdminStockIndexRoute
   '/compte/commandes': typeof CompteCommandesIndexRoute
+  '/compte/devis': typeof CompteDevisIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -113,45 +218,89 @@ export interface FileRoutesByTo {
   '/auth/inscription': typeof AuthInscriptionRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/produits/$slug': typeof ProduitsSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/commander': typeof CommanderIndexRoute
   '/compte': typeof CompteIndexRoute
   '/produits': typeof ProduitsIndexRoute
+  '/admin/clients/$userId': typeof AdminClientsUserIdRoute
+  '/admin/clients/en-attente': typeof AdminClientsEnAttenteRoute
+  '/admin/commandes/$orderId': typeof AdminCommandesOrderIdRoute
+  '/admin/devis/$quoteId': typeof AdminDevisQuoteIdRoute
+  '/admin/produits/$productId': typeof AdminProduitsProductIdRoute
+  '/admin/produits/nouveau': typeof AdminProduitsNouveauRoute
   '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
   '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
+  '/compte/devis/$quoteId': typeof CompteDevisQuoteIdRoute
+  '/admin/clients': typeof AdminClientsIndexRoute
+  '/admin/commandes': typeof AdminCommandesIndexRoute
+  '/admin/devis': typeof AdminDevisIndexRoute
+  '/admin/produits': typeof AdminProduitsIndexRoute
+  '/admin/stock': typeof AdminStockIndexRoute
   '/compte/commandes': typeof CompteCommandesIndexRoute
+  '/compte/devis': typeof CompteDevisIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/mcp': typeof McpRoute
   '/panier': typeof PanierRoute
   '/auth/connexion': typeof AuthConnexionRoute
   '/auth/inscription': typeof AuthInscriptionRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/produits/$slug': typeof ProduitsSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/commander/': typeof CommanderIndexRoute
   '/compte/': typeof CompteIndexRoute
   '/produits/': typeof ProduitsIndexRoute
+  '/admin/clients/$userId': typeof AdminClientsUserIdRoute
+  '/admin/clients/en-attente': typeof AdminClientsEnAttenteRoute
+  '/admin/commandes/$orderId': typeof AdminCommandesOrderIdRoute
+  '/admin/devis/$quoteId': typeof AdminDevisQuoteIdRoute
+  '/admin/produits/$productId': typeof AdminProduitsProductIdRoute
+  '/admin/produits/nouveau': typeof AdminProduitsNouveauRoute
   '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
   '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
+  '/compte/devis/$quoteId': typeof CompteDevisQuoteIdRoute
+  '/admin/clients/': typeof AdminClientsIndexRoute
+  '/admin/commandes/': typeof AdminCommandesIndexRoute
+  '/admin/devis/': typeof AdminDevisIndexRoute
+  '/admin/produits/': typeof AdminProduitsIndexRoute
+  '/admin/stock/': typeof AdminStockIndexRoute
   '/compte/commandes/': typeof CompteCommandesIndexRoute
+  '/compte/devis/': typeof CompteDevisIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/mcp'
     | '/panier'
     | '/auth/connexion'
     | '/auth/inscription'
     | '/categories/$slug'
     | '/produits/$slug'
+    | '/admin/'
     | '/commander'
     | '/compte'
     | '/produits'
+    | '/admin/clients/$userId'
+    | '/admin/clients/en-attente'
+    | '/admin/commandes/$orderId'
+    | '/admin/devis/$quoteId'
+    | '/admin/produits/$productId'
+    | '/admin/produits/nouveau'
     | '/commander/confirmation/$orderId'
     | '/compte/commandes/$orderId'
+    | '/compte/devis/$quoteId'
+    | '/admin/clients'
+    | '/admin/commandes'
+    | '/admin/devis'
+    | '/admin/produits'
+    | '/admin/stock'
     | '/compte/commandes'
+    | '/compte/devis'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -161,31 +310,61 @@ export interface FileRouteTypes {
     | '/auth/inscription'
     | '/categories/$slug'
     | '/produits/$slug'
+    | '/admin'
     | '/commander'
     | '/compte'
     | '/produits'
+    | '/admin/clients/$userId'
+    | '/admin/clients/en-attente'
+    | '/admin/commandes/$orderId'
+    | '/admin/devis/$quoteId'
+    | '/admin/produits/$productId'
+    | '/admin/produits/nouveau'
     | '/commander/confirmation/$orderId'
     | '/compte/commandes/$orderId'
+    | '/compte/devis/$quoteId'
+    | '/admin/clients'
+    | '/admin/commandes'
+    | '/admin/devis'
+    | '/admin/produits'
+    | '/admin/stock'
     | '/compte/commandes'
+    | '/compte/devis'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/mcp'
     | '/panier'
     | '/auth/connexion'
     | '/auth/inscription'
     | '/categories/$slug'
     | '/produits/$slug'
+    | '/admin/'
     | '/commander/'
     | '/compte/'
     | '/produits/'
+    | '/admin/clients/$userId'
+    | '/admin/clients/en-attente'
+    | '/admin/commandes/$orderId'
+    | '/admin/devis/$quoteId'
+    | '/admin/produits/$productId'
+    | '/admin/produits/nouveau'
     | '/commander/confirmation/$orderId'
     | '/compte/commandes/$orderId'
+    | '/compte/devis/$quoteId'
+    | '/admin/clients/'
+    | '/admin/commandes/'
+    | '/admin/devis/'
+    | '/admin/produits/'
+    | '/admin/stock/'
     | '/compte/commandes/'
+    | '/compte/devis/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   McpRoute: typeof McpRoute
   PanierRoute: typeof PanierRoute
   AuthConnexionRoute: typeof AuthConnexionRoute
@@ -197,7 +376,9 @@ export interface RootRouteChildren {
   ProduitsIndexRoute: typeof ProduitsIndexRoute
   CommanderConfirmationOrderIdRoute: typeof CommanderConfirmationOrderIdRoute
   CompteCommandesOrderIdRoute: typeof CompteCommandesOrderIdRoute
+  CompteDevisQuoteIdRoute: typeof CompteDevisQuoteIdRoute
   CompteCommandesIndexRoute: typeof CompteCommandesIndexRoute
+  CompteDevisIndexRoute: typeof CompteDevisIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -214,6 +395,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -244,6 +432,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommanderIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/produits/$slug': {
       id: '/produits/$slug'
       path: '/produits/$slug'
@@ -272,11 +467,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthConnexionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compte/devis/': {
+      id: '/compte/devis/'
+      path: '/compte/devis'
+      fullPath: '/compte/devis'
+      preLoaderRoute: typeof CompteDevisIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compte/commandes/': {
       id: '/compte/commandes/'
       path: '/compte/commandes'
       fullPath: '/compte/commandes'
       preLoaderRoute: typeof CompteCommandesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/stock/': {
+      id: '/admin/stock/'
+      path: '/stock'
+      fullPath: '/admin/stock'
+      preLoaderRoute: typeof AdminStockIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/produits/': {
+      id: '/admin/produits/'
+      path: '/produits'
+      fullPath: '/admin/produits'
+      preLoaderRoute: typeof AdminProduitsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/devis/': {
+      id: '/admin/devis/'
+      path: '/devis'
+      fullPath: '/admin/devis'
+      preLoaderRoute: typeof AdminDevisIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/commandes/': {
+      id: '/admin/commandes/'
+      path: '/commandes'
+      fullPath: '/admin/commandes'
+      preLoaderRoute: typeof AdminCommandesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/clients/': {
+      id: '/admin/clients/'
+      path: '/clients'
+      fullPath: '/admin/clients'
+      preLoaderRoute: typeof AdminClientsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/compte/devis/$quoteId': {
+      id: '/compte/devis/$quoteId'
+      path: '/compte/devis/$quoteId'
+      fullPath: '/compte/devis/$quoteId'
+      preLoaderRoute: typeof CompteDevisQuoteIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compte/commandes/$orderId': {
@@ -293,11 +537,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommanderConfirmationOrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/produits/nouveau': {
+      id: '/admin/produits/nouveau'
+      path: '/produits/nouveau'
+      fullPath: '/admin/produits/nouveau'
+      preLoaderRoute: typeof AdminProduitsNouveauRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/produits/$productId': {
+      id: '/admin/produits/$productId'
+      path: '/produits/$productId'
+      fullPath: '/admin/produits/$productId'
+      preLoaderRoute: typeof AdminProduitsProductIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/devis/$quoteId': {
+      id: '/admin/devis/$quoteId'
+      path: '/devis/$quoteId'
+      fullPath: '/admin/devis/$quoteId'
+      preLoaderRoute: typeof AdminDevisQuoteIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/commandes/$orderId': {
+      id: '/admin/commandes/$orderId'
+      path: '/commandes/$orderId'
+      fullPath: '/admin/commandes/$orderId'
+      preLoaderRoute: typeof AdminCommandesOrderIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/clients/en-attente': {
+      id: '/admin/clients/en-attente'
+      path: '/clients/en-attente'
+      fullPath: '/admin/clients/en-attente'
+      preLoaderRoute: typeof AdminClientsEnAttenteRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/clients/$userId': {
+      id: '/admin/clients/$userId'
+      path: '/clients/$userId'
+      fullPath: '/admin/clients/$userId'
+      preLoaderRoute: typeof AdminClientsUserIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminClientsUserIdRoute: typeof AdminClientsUserIdRoute
+  AdminClientsEnAttenteRoute: typeof AdminClientsEnAttenteRoute
+  AdminCommandesOrderIdRoute: typeof AdminCommandesOrderIdRoute
+  AdminDevisQuoteIdRoute: typeof AdminDevisQuoteIdRoute
+  AdminProduitsProductIdRoute: typeof AdminProduitsProductIdRoute
+  AdminProduitsNouveauRoute: typeof AdminProduitsNouveauRoute
+  AdminClientsIndexRoute: typeof AdminClientsIndexRoute
+  AdminCommandesIndexRoute: typeof AdminCommandesIndexRoute
+  AdminDevisIndexRoute: typeof AdminDevisIndexRoute
+  AdminProduitsIndexRoute: typeof AdminProduitsIndexRoute
+  AdminStockIndexRoute: typeof AdminStockIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminClientsUserIdRoute: AdminClientsUserIdRoute,
+  AdminClientsEnAttenteRoute: AdminClientsEnAttenteRoute,
+  AdminCommandesOrderIdRoute: AdminCommandesOrderIdRoute,
+  AdminDevisQuoteIdRoute: AdminDevisQuoteIdRoute,
+  AdminProduitsProductIdRoute: AdminProduitsProductIdRoute,
+  AdminProduitsNouveauRoute: AdminProduitsNouveauRoute,
+  AdminClientsIndexRoute: AdminClientsIndexRoute,
+  AdminCommandesIndexRoute: AdminCommandesIndexRoute,
+  AdminDevisIndexRoute: AdminDevisIndexRoute,
+  AdminProduitsIndexRoute: AdminProduitsIndexRoute,
+  AdminStockIndexRoute: AdminStockIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   McpRoute: McpRoute,
   PanierRoute: PanierRoute,
   AuthConnexionRoute: AuthConnexionRoute,
@@ -309,7 +628,9 @@ const rootRouteChildren: RootRouteChildren = {
   ProduitsIndexRoute: ProduitsIndexRoute,
   CommanderConfirmationOrderIdRoute: CommanderConfirmationOrderIdRoute,
   CompteCommandesOrderIdRoute: CompteCommandesOrderIdRoute,
+  CompteDevisQuoteIdRoute: CompteDevisQuoteIdRoute,
   CompteCommandesIndexRoute: CompteCommandesIndexRoute,
+  CompteDevisIndexRoute: CompteDevisIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

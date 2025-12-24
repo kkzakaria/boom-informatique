@@ -93,6 +93,8 @@ export const register = createServerFn({ method: 'POST' })
       lastName: user.lastName,
       companyName: user.companyName,
       isPro: user.role === 'pro',
+      isValidated: user.isValidated ?? false,
+      discountRate: user.discountRate ?? 0,
     }
 
     // Set session
@@ -151,6 +153,8 @@ export const login = createServerFn({ method: 'POST' })
       lastName: user.lastName,
       companyName: user.companyName,
       isPro: user.role === 'pro',
+      isValidated: user.isValidated ?? false,
+      discountRate: user.discountRate ?? 0,
     }
 
     // Set session

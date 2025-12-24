@@ -1,118 +1,410 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { getFeaturedProducts, getNewArrivals, getCategories } from '@/server/catalog'
+import { ProductCard, ProductCardSkeleton } from '@/components/ui/ProductCard'
+import { Button } from '@/components/ui/Button'
+import { useCart } from '@/hooks/useCart'
 import {
+  Monitor,
+  Cpu,
+  HardDrive,
+  Keyboard,
+  Headphones,
+  Printer,
+  ArrowRight,
   Zap,
-  Server,
-  Route as RouteIcon,
+  Truck,
   Shield,
-  Waves,
-  Sparkles,
+  Phone,
 } from 'lucide-react'
+import { Suspense } from 'react'
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({
+  loader: async ({ context: { queryClient } }) => {
+    await Promise.all([
+      queryClient.ensureQueryData({
+        queryKey: ['featured-products'],
+        queryFn: () => getFeaturedProducts(),
+      }),
+      queryClient.ensureQueryData({
+        queryKey: ['new-arrivals'],
+        queryFn: () => getNewArrivals(),
+      }),
+      queryClient.ensureQueryData({
+        queryKey: ['categories'],
+        queryFn: () => getCategories(),
+      }),
+    ])
+  },
+  component: HomePage,
+})
 
-function App() {
-  const features = [
+const categoryIcons: Record<string, React.ReactNode> = {
+  ordinateurs: <Monitor className="h-8 w-8" />,
+  composants: <Cpu className="h-8 w-8" />,
+  stockage: <HardDrive className="h-8 w-8" />,
+  peripheriques: <Keyboard className="h-8 w-8" />,
+  audio: <Headphones className="h-8 w-8" />,
+  impression: <Printer className="h-8 w-8" />,
+}
+
+function HomePage() {
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* Trust Badges */}
+      <TrustBadges />
+
+      {/* Categories */}
+      <Suspense fallback={<CategoriesSkeleton />}>
+        <CategoriesSection />
+      </Suspense>
+
+      {/* Featured Products */}
+      <Suspense fallback={<ProductsSectionSkeleton title="Produits en vedette" />}>
+        <FeaturedProductsSection />
+      </Suspense>
+
+      {/* New Arrivals */}
+      <Suspense fallback={<ProductsSectionSkeleton title="Nouveautés" />}>
+        <NewArrivalsSection />
+      </Suspense>
+
+      {/* CTA Section */}
+      <CTASection />
+    </div>
+  )
+}
+
+function HeroSection() {
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 py-16 lg:py-24">
+      <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+      <div className="container relative mx-auto px-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Votre partenaire informatique
+            <span className="mt-2 block text-primary-200">professionnel</span>
+          </h1>
+          <p className="mt-6 text-lg text-primary-100 sm:text-xl">
+            Matériel informatique de qualité pour entreprises et particuliers.
+            Plus de 5000 références disponibles avec livraison rapide.
+          </p>
+          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Link to="/produits">
+              <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                Voir nos produits
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </Link>
+            <Link to="/auth/inscription">
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full border-white/30 text-white hover:bg-white/10 sm:w-auto"
+              >
+                Créer un compte pro
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function TrustBadges() {
+  const badges = [
     {
-      icon: <Zap className="w-12 h-12 text-cyan-400" />,
-      title: 'Powerful Server Functions',
-      description:
-        'Write server-side code that seamlessly integrates with your client components. Type-safe, secure, and simple.',
+      icon: <Truck className="h-6 w-6" />,
+      title: 'Livraison rapide',
+      description: 'Expédition sous 24/48h',
     },
     {
-      icon: <Server className="w-12 h-12 text-cyan-400" />,
-      title: 'Flexible Server Side Rendering',
-      description:
-        'Full-document SSR, streaming, and progressive enhancement out of the box. Control exactly what renders where.',
+      icon: <Shield className="h-6 w-6" />,
+      title: 'Garantie 2 ans',
+      description: 'Sur tous nos produits',
     },
     {
-      icon: <RouteIcon className="w-12 h-12 text-cyan-400" />,
-      title: 'API Routes',
-      description:
-        'Build type-safe API endpoints alongside your application. No separate backend needed.',
+      icon: <Phone className="h-6 w-6" />,
+      title: 'Support expert',
+      description: 'Conseils personnalisés',
     },
     {
-      icon: <Shield className="w-12 h-12 text-cyan-400" />,
-      title: 'Strongly Typed Everything',
-      description:
-        'End-to-end type safety from server to client. Catch errors before they reach production.',
-    },
-    {
-      icon: <Waves className="w-12 h-12 text-cyan-400" />,
-      title: 'Full Streaming Support',
-      description:
-        'Stream data from server to client progressively. Perfect for AI applications and real-time updates.',
-    },
-    {
-      icon: <Sparkles className="w-12 h-12 text-cyan-400" />,
-      title: 'Next Generation Ready',
-      description:
-        'Built from the ground up for modern web applications. Deploy anywhere JavaScript runs.',
+      icon: <Zap className="h-6 w-6" />,
+      title: 'Prix compétitifs',
+      description: 'Tarifs pro négociés',
     },
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-      <section className="relative py-20 px-6 text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10"></div>
-        <div className="relative max-w-5xl mx-auto">
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <img
-              src="/tanstack-circle-logo.png"
-              alt="TanStack Logo"
-              className="w-24 h-24 md:w-32 md:h-32"
-            />
-            <h1 className="text-6xl md:text-7xl font-black text-white [letter-spacing:-0.08em]">
-              <span className="text-gray-300">TANSTACK</span>{' '}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                START
-              </span>
-            </h1>
-          </div>
-          <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
-            The framework for next generation AI applications
-          </p>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
-            Full-stack framework powered by TanStack Router for React and Solid.
-            Build modern applications with server functions, streaming, and type
-            safety.
-          </p>
-          <div className="flex flex-col items-center gap-4">
-            <a
-              href="https://tanstack.com/start"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/50"
-            >
-              Documentation
-            </a>
-            <p className="text-gray-400 text-sm mt-2">
-              Begin your TanStack Start journey by editing{' '}
-              <code className="px-2 py-1 bg-slate-700 rounded text-cyan-400">
-                /src/routes/index.tsx
-              </code>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10"
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-gray-400 leading-relaxed">
-                {feature.description}
-              </p>
+    <section className="border-b border-[--border-default] bg-[--bg-subtle] py-8">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+          {badges.map((badge) => (
+            <div key={badge.title} className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
+                {badge.icon}
+              </div>
+              <div>
+                <p className="font-semibold text-[--text-primary]">{badge.title}</p>
+                <p className="text-sm text-[--text-muted]">{badge.description}</p>
+              </div>
             </div>
           ))}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+  )
+}
+
+function CategoriesSection() {
+  const { data: categories } = useSuspenseQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories(),
+  })
+
+  if (!categories || categories.length === 0) {
+    return null
+  }
+
+  return (
+    <section className="py-12 lg:py-16">
+      <div className="container mx-auto px-4">
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="font-display text-2xl font-bold text-[--text-primary] lg:text-3xl">
+            Nos catégories
+          </h2>
+          <Link to="/produits" className="text-primary-600 hover:text-primary-700">
+            <span className="flex items-center gap-1 text-sm font-medium">
+              Tout voir
+              <ArrowRight className="h-4 w-4" />
+            </span>
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          {categories.slice(0, 6).map((category) => (
+            <Link
+              key={category.id}
+              to="/produits"
+              search={{ category: category.slug }}
+              className="group flex flex-col items-center gap-3 rounded-xl border border-[--border-default] bg-[--bg-card] p-6 transition-all hover:border-primary-300 hover:shadow-lg dark:hover:border-primary-700"
+            >
+              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-100 dark:bg-primary-900/20 dark:text-primary-400 dark:group-hover:bg-primary-900/30">
+                {categoryIcons[category.slug] || <Monitor className="h-8 w-8" />}
+              </div>
+              <span className="text-center font-medium text-[--text-primary]">
+                {category.name}
+              </span>
+              <span className="text-xs text-[--text-muted]">
+                {category.productCount} produits
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FeaturedProductsSection() {
+  const { addItem } = useCart()
+  const { data: products } = useSuspenseQuery({
+    queryKey: ['featured-products'],
+    queryFn: () => getFeaturedProducts(),
+  })
+
+  if (!products || products.length === 0) {
+    return null
+  }
+
+  return (
+    <section className="bg-[--bg-subtle] py-12 lg:py-16">
+      <div className="container mx-auto px-4">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h2 className="font-display text-2xl font-bold text-[--text-primary] lg:text-3xl">
+              Produits en vedette
+            </h2>
+            <p className="mt-1 text-[--text-muted]">
+              Notre sélection de produits populaires
+            </p>
+          </div>
+          <Link to="/produits" search={{ featured: true }}>
+            <Button variant="outline" size="sm">
+              Voir tout
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {products.slice(0, 8).map((product) => (
+            <Link key={product.id} to="/produits/$slug" params={{ slug: product.slug }}>
+              <ProductCard
+                id={product.id}
+                name={product.name}
+                slug={product.slug}
+                brand={product.brand?.name || 'Marque'}
+                imageUrl={product.images[0]?.url || '/placeholder-product.png'}
+                priceTtc={product.priceTtc}
+                priceHt={product.priceHt}
+                stockQuantity={product.stockQuantity}
+                stockAlertThreshold={product.stockAlertThreshold || 5}
+                onAddToCart={() =>
+                  addItem({
+                    productId: product.id,
+                    name: product.name,
+                    slug: product.slug,
+                    priceHt: product.priceHt,
+                    priceTtc: product.priceTtc,
+                    imageUrl: product.images[0]?.url || '/placeholder-product.png',
+                    quantity: 1,
+                    stockQuantity: product.stockQuantity,
+                  })
+                }
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function NewArrivalsSection() {
+  const { addItem } = useCart()
+  const { data: products } = useSuspenseQuery({
+    queryKey: ['new-arrivals'],
+    queryFn: () => getNewArrivals(),
+  })
+
+  if (!products || products.length === 0) {
+    return null
+  }
+
+  return (
+    <section className="py-12 lg:py-16">
+      <div className="container mx-auto px-4">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h2 className="font-display text-2xl font-bold text-[--text-primary] lg:text-3xl">
+              Nouveautés
+            </h2>
+            <p className="mt-1 text-[--text-muted]">Les derniers produits ajoutés</p>
+          </div>
+          <Link to="/produits" search={{ sortBy: 'newest' }}>
+            <Button variant="outline" size="sm">
+              Voir tout
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {products.slice(0, 4).map((product) => (
+            <Link key={product.id} to="/produits/$slug" params={{ slug: product.slug }}>
+              <ProductCard
+                id={product.id}
+                name={product.name}
+                slug={product.slug}
+                brand={product.brand?.name || 'Marque'}
+                imageUrl={product.images[0]?.url || '/placeholder-product.png'}
+                priceTtc={product.priceTtc}
+                priceHt={product.priceHt}
+                stockQuantity={product.stockQuantity}
+                stockAlertThreshold={product.stockAlertThreshold || 5}
+                isNew
+                onAddToCart={() =>
+                  addItem({
+                    productId: product.id,
+                    name: product.name,
+                    slug: product.slug,
+                    priceHt: product.priceHt,
+                    priceTtc: product.priceTtc,
+                    imageUrl: product.images[0]?.url || '/placeholder-product.png',
+                    quantity: 1,
+                    stockQuantity: product.stockQuantity,
+                  })
+                }
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CTASection() {
+  return (
+    <section className="bg-gradient-to-r from-primary-600 to-primary-800 py-16">
+      <div className="container mx-auto px-4 text-center">
+        <h2 className="font-display text-3xl font-bold text-white lg:text-4xl">
+          Vous êtes un professionnel ?
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-primary-100">
+          Bénéficiez de tarifs préférentiels, de devis personnalisés et d'un
+          accompagnement dédié pour vos projets informatiques.
+        </p>
+        <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <Link to="/auth/inscription">
+            <Button variant="secondary" size="lg">
+              Créer mon compte pro
+              <ArrowRight className="h-5 w-5" />
+            </Button>
+          </Link>
+          <Link to="/contact">
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-white/30 text-white hover:bg-white/10"
+            >
+              Nous contacter
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CategoriesSkeleton() {
+  return (
+    <section className="py-12 lg:py-16">
+      <div className="container mx-auto px-4">
+        <div className="mb-8 h-8 w-48 animate-shimmer rounded bg-surface-200 dark:bg-surface-700" />
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="flex flex-col items-center gap-3 rounded-xl border border-[--border-default] bg-[--bg-card] p-6"
+            >
+              <div className="h-16 w-16 animate-shimmer rounded-xl bg-surface-200 dark:bg-surface-700" />
+              <div className="h-4 w-20 animate-shimmer rounded bg-surface-200 dark:bg-surface-700" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ProductsSectionSkeleton({ title }: { title: string }) {
+  return (
+    <section className="py-12 lg:py-16">
+      <div className="container mx-auto px-4">
+        <div className="mb-8">
+          <h2 className="font-display text-2xl font-bold text-[--text-primary] lg:text-3xl">
+            {title}
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }

@@ -1,8 +1,9 @@
 import { Heart, ShoppingCart } from 'lucide-react'
-import { cn, formatPrice } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { InteractiveCard } from './Card'
 import { Button } from './Button'
 import { StockBadge, PromoBadge, NewBadge } from './Badge'
+import { CompactPrice } from './PriceDisplay'
 
 interface ProductCardProps {
   id: number
@@ -12,7 +13,6 @@ interface ProductCardProps {
   imageUrl: string
   priceTtc: number
   priceHt?: number
-  oldPrice?: number
   stockQuantity: number
   stockAlertThreshold?: number
   rating?: number
@@ -20,7 +20,6 @@ interface ProductCardProps {
   isNew?: boolean
   discount?: number
   isFavorite?: boolean
-  showPriceHt?: boolean // For B2B users
   onAddToCart?: (id: number) => void
   onToggleFavorite?: (id: number) => void
   className?: string
@@ -62,7 +61,6 @@ export function ProductCard({
   imageUrl,
   priceTtc,
   priceHt,
-  oldPrice,
   stockQuantity,
   stockAlertThreshold = 5,
   rating,
@@ -70,7 +68,6 @@ export function ProductCard({
   isNew,
   discount,
   isFavorite = false,
-  showPriceHt = false,
   onAddToCart,
   onToggleFavorite,
   className,
@@ -133,21 +130,9 @@ export function ProductCard({
           <StarRating rating={rating} count={reviewCount} />
         )}
 
-        {/* Price section */}
-        <div className="mt-1 flex flex-col gap-1">
-          <div className="flex items-baseline gap-2">
-            <span className="font-mono text-xl font-semibold tracking-tight text-[--text-primary]">
-              {formatPrice(showPriceHt && priceHt ? priceHt : priceTtc)}
-            </span>
-            {showPriceHt && <span className="text-xs text-[--text-muted]">HT</span>}
-            {!showPriceHt && <span className="text-xs text-[--text-muted]">TTC</span>}
-          </div>
-
-          {oldPrice && oldPrice > priceTtc && (
-            <span className="font-mono text-sm text-[--text-muted] line-through">
-              {formatPrice(oldPrice)}
-            </span>
-          )}
+        {/* Price section - B2B aware */}
+        <div className="mt-1">
+          <CompactPrice priceHt={priceHt || priceTtc / 1.2} priceTtc={priceTtc} />
         </div>
 
         {/* Stock status */}

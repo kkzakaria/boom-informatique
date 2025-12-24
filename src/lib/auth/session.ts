@@ -8,6 +8,8 @@ export interface SessionUser {
   lastName: string | null
   companyName: string | null
   isPro: boolean
+  isValidated: boolean
+  discountRate: number
 }
 
 export interface Session {

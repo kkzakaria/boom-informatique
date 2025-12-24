@@ -479,11 +479,11 @@ acceptQuote(quoteId)
 - [x] Espace client basique (dashboard, commandes, adresses)
 
 ### Phase 2 - B2B & Admin (V1.1)
-- [ ] Comptes professionnels
-- [ ] Tarification B2B (HT, remises)
-- [ ] Module devis
-- [ ] Back-office admin complet
-- [ ] Gestion stock temps réel
+- [x] Comptes professionnels (validation admin, session B2B)
+- [x] Tarification B2B (HT, remises, hook useProPricing)
+- [~] Module devis (liste, détail, envoi - édition items à compléter)
+- [x] Back-office admin (dashboard, clients, produits, commandes, stock)
+- [x] Gestion stock temps réel (alertes, mouvements, ajustements)
 
 ### Phase 3 - Enrichissement (V1.2)
 - [ ] Comparateur de produits
@@ -520,9 +520,13 @@ acceptQuote(quoteId)
 - [ ] Confirmation par email
 
 ### Admin
-- [ ] CRUD produits fonctionnel
-- [ ] Gestion des commandes (statuts)
-- [ ] Visualisation clients
+- [x] Dashboard avec statistiques
+- [x] Visualisation clients (liste, détail, filtres)
+- [x] Validation comptes professionnels
+- [~] Gestion devis (liste, détail, envoi - édition items manquante)
+- [x] CRUD produits (liste, création, édition, images R2)
+- [x] Gestion des commandes (liste, détail, statuts, historique)
+- [x] Gestion stock (alertes, mouvements, ajustements)
 
 ---
 
@@ -547,5 +551,5 @@ acceptQuote(quoteId)
 ---
 
 *Document créé le 23 décembre 2025*
-*Dernière mise à jour : 23 décembre 2025*
-*Version : 1.0.0 - Phase 1 MVP Complete*
+*Dernière mise à jour : 24 décembre 2025*
+*Version : 1.1.0-wip - Phase 2 B2B & Admin (devis à compléter)*
