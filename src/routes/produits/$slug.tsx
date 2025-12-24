@@ -1,11 +1,19 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseQuery, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { getProductBySlug, getProducts } from '@/server/catalog'
+import { getProductRatingStats, getUserReviewForProduct } from '@/server/reviews'
 import { ProductCard } from '@/components/ui/ProductCard'
 import { Button } from '@/components/ui/Button'
 import { StockBadge } from '@/components/ui/Badge'
+import {
+  StarRatingDisplay,
+  ReviewForm,
+  ReviewList,
+  RatingDistribution,
+} from '@/components/reviews'
 import { cn, formatPrice } from '@/lib/utils'
+import { useAuth } from '@/hooks/useAuth'
 import {
   ShoppingCart,
   Heart,
@@ -16,6 +24,7 @@ import {
   Truck,
   Store,
   Shield,
+  MessageSquare,
 } from 'lucide-react'
 
 export const Route = createFileRoute('/produits/$slug')({
@@ -172,6 +181,23 @@ function ProductDetailPage() {
             Réf: {product.sku}
           </p>
 
+          {/* Rating */}
+          {product.rating.count > 0 && (
+            <div className="mt-3 flex items-center gap-2">
+              <StarRatingDisplay
+                rating={product.rating.average}
+                count={product.rating.count}
+                size="md"
+              />
+              <a
+                href="#avis"
+                className="text-sm text-primary-600 hover:underline dark:text-primary-400"
+              >
+                Voir les avis
+              </a>
+            </div>
+          )}
+
           {/* Price */}
           <div className="mt-6 flex items-baseline gap-3">
             <span className="font-mono text-4xl font-semibold text-[--text-primary]">
@@ -327,6 +353,9 @@ function ProductDetailPage() {
         </div>
       )}
 
+      {/* Reviews Section */}
+      <ReviewsSection productId={product.id} />
+
       {/* Related Products */}
       {product.category && (
         <div className="mt-16">
@@ -381,9 +410,90 @@ function RelatedProducts({
             priceHt={product.priceHt}
             stockQuantity={product.stockQuantity}
             stockAlertThreshold={product.stockAlertThreshold || 5}
+            rating={product.rating.average}
+            reviewCount={product.rating.count}
           />
         </Link>
       ))}
+    </div>
+  )
+}
+
+function ReviewsSection({ productId }: { productId: number }) {
+  const { user, isAuthenticated } = useAuth()
+  const [showForm, setShowForm] = useState(false)
+
+  const { data: ratingStats } = useQuery({
+    queryKey: ['ratingStats', productId],
+    queryFn: () => getProductRatingStats({ data: productId }),
+  })
+
+  const { data: userReview } = useQuery({
+    queryKey: ['userReview', productId],
+    queryFn: () => getUserReviewForProduct({ data: productId }),
+    enabled: isAuthenticated,
+  })
+
+  return (
+    <div id="avis" className="mt-16 scroll-mt-8">
+      <div className="flex items-center gap-3 mb-6">
+        <MessageSquare className="h-6 w-6 text-primary-500" />
+        <h2 className="font-display text-2xl font-semibold text-[--text-primary]">
+          Avis clients
+        </h2>
+      </div>
+
+      {/* Rating Distribution */}
+      {ratingStats && ratingStats.count > 0 && (
+        <div className="mb-8 rounded-[--radius-lg] border border-[--border-default] bg-[--bg-card] p-6">
+          <RatingDistribution stats={ratingStats} />
+        </div>
+      )}
+
+      {/* Review Form */}
+      {isAuthenticated ? (
+        userReview ? (
+          <div className="mb-8">
+            <p className="text-sm text-[--text-muted] mb-4">
+              Vous avez déjà donné votre avis sur ce produit.
+            </p>
+            <ReviewForm
+              productId={productId}
+              existingReview={userReview}
+              onSuccess={() => setShowForm(false)}
+            />
+          </div>
+        ) : showForm ? (
+          <div className="mb-8">
+            <ReviewForm
+              productId={productId}
+              onSuccess={() => setShowForm(false)}
+            />
+          </div>
+        ) : (
+          <div className="mb-8">
+            <Button onClick={() => setShowForm(true)}>
+              <MessageSquare className="h-4 w-4" />
+              Donner mon avis
+            </Button>
+          </div>
+        )
+      ) : (
+        <div className="mb-8 rounded-[--radius-lg] border border-[--border-default] bg-[--bg-muted] p-4">
+          <p className="text-sm text-[--text-muted]">
+            <Link
+              to="/auth/connexion"
+              className="text-primary-600 hover:underline dark:text-primary-400"
+            >
+              Connectez-vous
+            </Link>{' '}
+            pour donner votre avis sur ce produit.
+          </p>
+        </div>
+      )}
+
+      {/* Reviews List */}
+      <ReviewList productId={productId} />
     </div>
   )
 }

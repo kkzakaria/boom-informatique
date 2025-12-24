@@ -4,6 +4,7 @@ import { InteractiveCard } from './Card'
 import { Button } from './Button'
 import { StockBadge, PromoBadge, NewBadge } from './Badge'
 import { CompactPrice } from './PriceDisplay'
+import { CompareButton } from '@/components/comparison'
 
 interface ProductCardProps {
   id: number
@@ -57,6 +58,7 @@ function StarRating({ rating, count }: { rating: number; count: number }) {
 export function ProductCard({
   id,
   name,
+  slug,
   brand,
   imageUrl,
   priceTtc,
@@ -92,25 +94,40 @@ export function ProductCard({
           {isNew && <NewBadge />}
         </div>
 
-        {/* Favorite button */}
-        <button
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            onToggleFavorite?.(id)
-          }}
-          className={cn(
-            'absolute right-3 top-3 flex h-9 w-9 items-center justify-center',
-            'rounded-full bg-white/90 backdrop-blur-sm',
-            'transition-all duration-[--duration-fast]',
-            'hover:bg-white hover:scale-110',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500',
-            isFavorite && 'text-error'
-          )}
-          aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-        >
-          <Heart className={cn('h-5 w-5', isFavorite && 'fill-current')} />
-        </button>
+        {/* Action buttons */}
+        <div className="absolute right-3 top-3 flex flex-col gap-2">
+          {/* Favorite button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              onToggleFavorite?.(id)
+            }}
+            className={cn(
+              'flex h-9 w-9 items-center justify-center',
+              'rounded-full bg-white/90 backdrop-blur-sm',
+              'transition-all duration-[--duration-fast]',
+              'hover:bg-white hover:scale-110',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500',
+              isFavorite && 'text-error'
+            )}
+            aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+          >
+            <Heart className={cn('h-5 w-5', isFavorite && 'fill-current')} />
+          </button>
+          {/* Compare button */}
+          <CompareButton
+            product={{
+              id,
+              name,
+              slug,
+              priceTtc,
+              priceHt: priceHt || priceTtc / 1.2,
+              imageUrl,
+              brandName: brand,
+            }}
+          />
+        </div>
       </div>
 
       {/* Content */}

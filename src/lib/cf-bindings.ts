@@ -10,6 +10,7 @@ export interface CloudflareBindings {
   DOCS_BUCKET: R2Bucket
   ENVIRONMENT: string
   SESSION_SECRET: string
+  RESEND_API_KEY: string
 }
 
 /**
@@ -50,4 +51,15 @@ export function getSessionSecret(): string {
     throw new Error('SESSION_SECRET is not configured in Cloudflare bindings')
   }
   return secret
+}
+
+/**
+ * Get Resend API key for email sending
+ */
+export function getResendApiKey(): string {
+  const key = getBindings().RESEND_API_KEY
+  if (!key) {
+    throw new Error('RESEND_API_KEY is not configured in Cloudflare bindings')
+  }
+  return key
 }

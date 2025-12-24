@@ -7,6 +7,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import Header from '../components/Header'
+import { ComparisonBar } from '../components/comparison'
 
 import StoreDevtools from '../lib/demo-store-devtools'
 
@@ -53,7 +54,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <Header />
-        {children}
+        <main className="pb-20">{children}</main>
+        <ComparisonBar />
         <TanStackDevtools
           config={{
             position: 'bottom-right',
