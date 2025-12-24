@@ -486,11 +486,11 @@ acceptQuote(quoteId)
 - [x] Gestion stock temps réel (alertes, mouvements, ajustements)
 
 ### Phase 3 - Enrichissement (V1.2)
-- [ ] Comparateur de produits
-- [ ] Système d'avis clients
-- [ ] Notifications email
-- [ ] Export PDF (devis, factures)
-- [ ] Statistiques avancées
+- [x] Comparateur de produits (jusqu'à 4 produits, barre flottante, page /comparer)
+- [x] Système d'avis clients (notes, commentaires, modération admin)
+- [x] Notifications email (Resend - templates commandes, devis, validation pro)
+- [x] Export PDF (jsPDF - devis et factures téléchargeables)
+- [x] Statistiques avancées (Recharts - CA, top produits, répartition B2C/B2B)
 
 ### Phase 4 - Évolutions futures
 - [ ] Paiement en ligne (Stripe)
@@ -552,4 +552,4 @@ acceptQuote(quoteId)
 
 *Document créé le 23 décembre 2025*
 *Dernière mise à jour : 24 décembre 2025*
-*Version : 1.1.0-wip - Phase 2 B2B & Admin (devis à compléter)*
+*Version : 1.2.0 - Phase 3 Enrichissement complète*
