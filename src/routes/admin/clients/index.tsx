@@ -28,13 +28,14 @@ export const Route = createFileRoute('/admin/clients/')({
     validated: (search.validated as string) || 'all',
   }),
   loader: async ({ context: { queryClient }, search }) => {
+    const safeSearch = search || { page: 1, role: 'all', validated: 'all' }
     await queryClient.ensureQueryData({
-      queryKey: ['admin', 'users', search],
+      queryKey: ['admin', 'users', safeSearch],
       queryFn: () =>
         getAllUsers({
-          page: search.page,
-          role: search.role as 'all' | 'customer' | 'pro' | 'admin',
-          validated: search.validated as 'all' | 'validated' | 'pending',
+          page: safeSearch.page,
+          role: safeSearch.role as 'all' | 'customer' | 'pro' | 'admin',
+          validated: safeSearch.validated as 'all' | 'validated' | 'pending',
         }),
     })
   },

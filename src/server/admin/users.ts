@@ -50,13 +50,16 @@ interface GetAllUsersInput {
  * Get all users with pagination and filters
  */
 export const getAllUsers = createServerFn({ method: 'GET' })
-  .inputValidator((input: GetAllUsersInput = {}) => ({
-    page: input.page || 1,
-    limit: input.limit || 20,
-    search: input.search || '',
-    role: input.role || 'all',
-    validated: input.validated || 'all',
-  }))
+  .inputValidator((input: GetAllUsersInput | undefined) => {
+    const safeInput = input || {}
+    return {
+      page: safeInput.page || 1,
+      limit: safeInput.limit || 20,
+      search: safeInput.search || '',
+      role: safeInput.role || 'all',
+      validated: safeInput.validated || 'all',
+    }
+  })
   .handler(async ({ data }) => {
     requireAdmin()
     const db = getDb()

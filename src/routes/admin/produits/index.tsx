@@ -29,13 +29,14 @@ export const Route = createFileRoute('/admin/produits/')({
     isActive: search.isActive === 'false' ? false : undefined,
   }),
   loader: async ({ context: { queryClient }, search }) => {
+    const safeSearch = search || { page: 1, search: '', isActive: undefined }
     await queryClient.ensureQueryData({
-      queryKey: ['admin', 'products', search],
+      queryKey: ['admin', 'products', safeSearch],
       queryFn: () =>
         getAdminProducts({
-          page: search.page,
-          search: search.search,
-          isActive: search.isActive,
+          page: safeSearch.page,
+          search: safeSearch.search,
+          isActive: safeSearch.isActive,
         }),
     })
   },

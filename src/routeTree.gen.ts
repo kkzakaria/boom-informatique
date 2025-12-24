@@ -29,6 +29,8 @@ import { Route as AdminClientsIndexRouteImport } from './routes/admin/clients/in
 import { Route as CompteDevisQuoteIdRouteImport } from './routes/compte/devis/$quoteId'
 import { Route as CompteCommandesOrderIdRouteImport } from './routes/compte/commandes/$orderId'
 import { Route as CommanderConfirmationOrderIdRouteImport } from './routes/commander/confirmation.$orderId'
+import { Route as AdminProduitsNouveauRouteImport } from './routes/admin/produits/nouveau'
+import { Route as AdminProduitsProductIdRouteImport } from './routes/admin/produits/$productId'
 import { Route as AdminDevisQuoteIdRouteImport } from './routes/admin/devis/$quoteId'
 import { Route as AdminClientsEnAttenteRouteImport } from './routes/admin/clients/en-attente'
 import { Route as AdminClientsUserIdRouteImport } from './routes/admin/clients/$userId'
@@ -134,6 +136,16 @@ const CommanderConfirmationOrderIdRoute =
     path: '/commander/confirmation/$orderId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminProduitsNouveauRoute = AdminProduitsNouveauRouteImport.update({
+  id: '/produits/nouveau',
+  path: '/produits/nouveau',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProduitsProductIdRoute = AdminProduitsProductIdRouteImport.update({
+  id: '/produits/$productId',
+  path: '/produits/$productId',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDevisQuoteIdRoute = AdminDevisQuoteIdRouteImport.update({
   id: '/devis/$quoteId',
   path: '/devis/$quoteId',
@@ -166,6 +178,8 @@ export interface FileRoutesByFullPath {
   '/admin/clients/$userId': typeof AdminClientsUserIdRoute
   '/admin/clients/en-attente': typeof AdminClientsEnAttenteRoute
   '/admin/devis/$quoteId': typeof AdminDevisQuoteIdRoute
+  '/admin/produits/$productId': typeof AdminProduitsProductIdRoute
+  '/admin/produits/nouveau': typeof AdminProduitsNouveauRoute
   '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
   '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
   '/compte/devis/$quoteId': typeof CompteDevisQuoteIdRoute
@@ -190,6 +204,8 @@ export interface FileRoutesByTo {
   '/admin/clients/$userId': typeof AdminClientsUserIdRoute
   '/admin/clients/en-attente': typeof AdminClientsEnAttenteRoute
   '/admin/devis/$quoteId': typeof AdminDevisQuoteIdRoute
+  '/admin/produits/$productId': typeof AdminProduitsProductIdRoute
+  '/admin/produits/nouveau': typeof AdminProduitsNouveauRoute
   '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
   '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
   '/compte/devis/$quoteId': typeof CompteDevisQuoteIdRoute
@@ -216,6 +232,8 @@ export interface FileRoutesById {
   '/admin/clients/$userId': typeof AdminClientsUserIdRoute
   '/admin/clients/en-attente': typeof AdminClientsEnAttenteRoute
   '/admin/devis/$quoteId': typeof AdminDevisQuoteIdRoute
+  '/admin/produits/$productId': typeof AdminProduitsProductIdRoute
+  '/admin/produits/nouveau': typeof AdminProduitsNouveauRoute
   '/commander/confirmation/$orderId': typeof CommanderConfirmationOrderIdRoute
   '/compte/commandes/$orderId': typeof CompteCommandesOrderIdRoute
   '/compte/devis/$quoteId': typeof CompteDevisQuoteIdRoute
@@ -243,6 +261,8 @@ export interface FileRouteTypes {
     | '/admin/clients/$userId'
     | '/admin/clients/en-attente'
     | '/admin/devis/$quoteId'
+    | '/admin/produits/$productId'
+    | '/admin/produits/nouveau'
     | '/commander/confirmation/$orderId'
     | '/compte/commandes/$orderId'
     | '/compte/devis/$quoteId'
@@ -267,6 +287,8 @@ export interface FileRouteTypes {
     | '/admin/clients/$userId'
     | '/admin/clients/en-attente'
     | '/admin/devis/$quoteId'
+    | '/admin/produits/$productId'
+    | '/admin/produits/nouveau'
     | '/commander/confirmation/$orderId'
     | '/compte/commandes/$orderId'
     | '/compte/devis/$quoteId'
@@ -292,6 +314,8 @@ export interface FileRouteTypes {
     | '/admin/clients/$userId'
     | '/admin/clients/en-attente'
     | '/admin/devis/$quoteId'
+    | '/admin/produits/$productId'
+    | '/admin/produits/nouveau'
     | '/commander/confirmation/$orderId'
     | '/compte/commandes/$orderId'
     | '/compte/devis/$quoteId'
@@ -463,6 +487,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommanderConfirmationOrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/produits/nouveau': {
+      id: '/admin/produits/nouveau'
+      path: '/produits/nouveau'
+      fullPath: '/admin/produits/nouveau'
+      preLoaderRoute: typeof AdminProduitsNouveauRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/produits/$productId': {
+      id: '/admin/produits/$productId'
+      path: '/produits/$productId'
+      fullPath: '/admin/produits/$productId'
+      preLoaderRoute: typeof AdminProduitsProductIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/devis/$quoteId': {
       id: '/admin/devis/$quoteId'
       path: '/devis/$quoteId'
@@ -492,6 +530,8 @@ interface AdminRouteChildren {
   AdminClientsUserIdRoute: typeof AdminClientsUserIdRoute
   AdminClientsEnAttenteRoute: typeof AdminClientsEnAttenteRoute
   AdminDevisQuoteIdRoute: typeof AdminDevisQuoteIdRoute
+  AdminProduitsProductIdRoute: typeof AdminProduitsProductIdRoute
+  AdminProduitsNouveauRoute: typeof AdminProduitsNouveauRoute
   AdminClientsIndexRoute: typeof AdminClientsIndexRoute
   AdminDevisIndexRoute: typeof AdminDevisIndexRoute
   AdminProduitsIndexRoute: typeof AdminProduitsIndexRoute
@@ -502,6 +542,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminClientsUserIdRoute: AdminClientsUserIdRoute,
   AdminClientsEnAttenteRoute: AdminClientsEnAttenteRoute,
   AdminDevisQuoteIdRoute: AdminDevisQuoteIdRoute,
+  AdminProduitsProductIdRoute: AdminProduitsProductIdRoute,
+  AdminProduitsNouveauRoute: AdminProduitsNouveauRoute,
   AdminClientsIndexRoute: AdminClientsIndexRoute,
   AdminDevisIndexRoute: AdminDevisIndexRoute,
   AdminProduitsIndexRoute: AdminProduitsIndexRoute,

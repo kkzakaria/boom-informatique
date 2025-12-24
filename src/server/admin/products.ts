@@ -65,14 +65,17 @@ interface GetProductsInput {
  * Get all products with pagination
  */
 export const getAdminProducts = createServerFn({ method: 'GET' })
-  .inputValidator((input: GetProductsInput = {}) => ({
-    page: input.page || 1,
-    limit: input.limit || 20,
-    search: input.search || '',
-    categoryId: input.categoryId,
-    brandId: input.brandId,
-    isActive: input.isActive,
-  }))
+  .inputValidator((input: GetProductsInput | undefined) => {
+    const safeInput = input || {}
+    return {
+      page: safeInput.page || 1,
+      limit: safeInput.limit || 20,
+      search: safeInput.search || '',
+      categoryId: safeInput.categoryId,
+      brandId: safeInput.brandId,
+      isActive: safeInput.isActive,
+    }
+  })
   .handler(async ({ data }) => {
     requireAdmin()
     const db = getDb()
@@ -173,7 +176,13 @@ export const getAdminProducts = createServerFn({ method: 'GET' })
  * Get product by ID for editing
  */
 export const getProductById = createServerFn({ method: 'GET' })
-  .inputValidator((id: number) => id)
+  .inputValidator((id: number | undefined) => {
+    const productId = Number(id)
+    if (!productId || isNaN(productId)) {
+      throw new Error('Valid product ID is required')
+    }
+    return productId
+  })
   .handler(async ({ data: productId }) => {
     requireAdmin()
     const db = getDb()
@@ -370,7 +379,13 @@ export const updateProduct = createServerFn({ method: 'POST' })
  * Delete (deactivate) a product
  */
 export const deleteProduct = createServerFn({ method: 'POST' })
-  .inputValidator((productId: number) => productId)
+  .inputValidator((productId: number | undefined) => {
+    const id = Number(productId)
+    if (!id || isNaN(id)) {
+      throw new Error('Valid product ID is required')
+    }
+    return id
+  })
   .handler(async ({ data: productId }) => {
     requireAdmin()
     const db = getDb()
