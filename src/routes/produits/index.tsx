@@ -219,7 +219,7 @@ function ProductsPage() {
         {/* Main Content */}
         <div className="flex-1">
           {/* Toolbar */}
-          <div className="mb-6 flex items-center justify-between gap-4 rounded-[--radius-lg] border border-[--border-default] bg-[--bg-card] p-4">
+          <div className="mb-6 flex items-center justify-between gap-4 rounded-[--radius-lg] border border-[--border-default] bg-white dark:bg-surface-900 p-4 shadow-sm">
             <Button
               variant="ghost"
               size="sm"
@@ -239,7 +239,7 @@ function ProductsPage() {
                   onChange={(e) =>
                     updateSearch({ sort: e.target.value as SearchParams['sort'] })
                   }
-                  className="rounded-[--radius-md] border border-[--border-default] bg-[--bg-card] px-3 py-1.5 text-sm"
+                  className="rounded-[--radius-md] border border-[--border-default] bg-white dark:bg-surface-800 px-3 py-1.5 text-sm text-[--text-primary]"
                 >
                   {sortOptions.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -250,14 +250,14 @@ function ProductsPage() {
               </div>
 
               {/* View mode */}
-              <div className="flex gap-1 rounded-[--radius-md] bg-[--bg-muted] p-1">
+              <div className="flex gap-1 rounded-[--radius-md] bg-surface-100 dark:bg-surface-800 p-1">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={cn(
                     'rounded-[--radius-sm] p-1.5 transition-colors',
                     viewMode === 'grid'
-                      ? 'bg-[--bg-card] shadow-sm'
-                      : 'text-[--text-muted]'
+                      ? 'bg-white dark:bg-surface-700 shadow-sm text-[--text-primary]'
+                      : 'text-[--text-muted] hover:text-[--text-secondary]'
                   )}
                 >
                   <Grid3X3 className="h-4 w-4" />
@@ -267,8 +267,8 @@ function ProductsPage() {
                   className={cn(
                     'rounded-[--radius-sm] p-1.5 transition-colors',
                     viewMode === 'list'
-                      ? 'bg-[--bg-card] shadow-sm'
-                      : 'text-[--text-muted]'
+                      ? 'bg-white dark:bg-surface-700 shadow-sm text-[--text-primary]'
+                      : 'text-[--text-muted] hover:text-[--text-secondary]'
                   )}
                 >
                   <List className="h-4 w-4" />

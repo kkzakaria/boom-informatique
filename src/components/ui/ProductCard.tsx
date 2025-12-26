@@ -178,15 +178,15 @@ export function ProductCard({
 // Skeleton for loading state
 export function ProductCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-[--radius-lg] border border-[--border-default] bg-[--bg-card]">
-      <div className="aspect-[4/3] animate-shimmer" />
+    <div className="overflow-hidden rounded-[--radius-lg] border border-[--border-default] bg-white dark:bg-surface-900 shadow-sm">
+      <div className="aspect-[4/3] bg-surface-100 dark:bg-surface-800 animate-shimmer" />
       <div className="flex flex-col gap-3 p-4">
-        <div className="h-3 w-16 animate-shimmer rounded" />
-        <div className="h-4 w-full animate-shimmer rounded" />
-        <div className="h-4 w-3/4 animate-shimmer rounded" />
-        <div className="h-6 w-24 animate-shimmer rounded" />
-        <div className="h-3 w-20 animate-shimmer rounded" />
-        <div className="mt-2 h-10 w-full animate-shimmer rounded-[--radius-md]" />
+        <div className="h-3 w-16 animate-shimmer rounded bg-surface-200 dark:bg-surface-700" />
+        <div className="h-4 w-full animate-shimmer rounded bg-surface-200 dark:bg-surface-700" />
+        <div className="h-4 w-3/4 animate-shimmer rounded bg-surface-200 dark:bg-surface-700" />
+        <div className="h-6 w-24 animate-shimmer rounded bg-surface-200 dark:bg-surface-700" />
+        <div className="h-3 w-20 animate-shimmer rounded bg-surface-200 dark:bg-surface-700" />
+        <div className="mt-2 h-10 w-full animate-shimmer rounded-[--radius-md] bg-surface-200 dark:bg-surface-700" />
       </div>
     </div>
   )

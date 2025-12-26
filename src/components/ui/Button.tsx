@@ -15,8 +15,9 @@ const buttonVariants = cva(
                   hover:bg-primary-600 hover:shadow-glow-primary hover:-translate-y-0.5
                   active:translate-y-0 active:scale-[0.98]
                   focus-visible:ring-primary-500`,
-        secondary: `bg-surface-100 text-[--text-primary] border border-[--border-default]
-                    hover:bg-surface-200 hover:border-[--border-strong]
+        secondary: `bg-white dark:bg-surface-800 text-[--text-primary] border border-[--border-default]
+                    hover:bg-surface-50 dark:hover:bg-surface-700 hover:border-[--border-strong]
+                    shadow-sm hover:shadow
                     active:scale-[0.98]
                     focus-visible:ring-surface-400`,
         outline: `border border-primary-300 text-primary-600 bg-transparent
@@ -25,7 +26,7 @@ const buttonVariants = cva(
                   focus-visible:ring-primary-500
                   dark:border-primary-700 dark:text-primary-400 dark:hover:bg-primary-950`,
         ghost: `text-[--text-secondary] bg-transparent
-                hover:bg-surface-100 hover:text-[--text-primary]
+                hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-[--text-primary]
                 active:scale-[0.98]
                 focus-visible:ring-surface-400`,
         destructive: `bg-error text-white

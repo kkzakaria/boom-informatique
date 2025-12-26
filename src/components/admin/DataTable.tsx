@@ -137,7 +137,7 @@ export function DataTable<TData, TValue>({
               </tr>
             ))}
           </thead>
-          <tbody className="divide-y divide-[--border-default] bg-[--bg-card]">
+          <tbody className="divide-y divide-[--border-default] bg-white dark:bg-surface-900">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <tr

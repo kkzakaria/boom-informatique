@@ -113,19 +113,27 @@
 :root {
   /* Semantic tokens - Light mode */
   --bg-page: var(--color-surface-50);
-  --bg-card: white;
-  --bg-elevated: white;
+  --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
   --bg-muted: var(--color-surface-100);
+  --bg-subtle: var(--color-surface-100);
 
   --text-primary: var(--color-surface-800);
-  --text-secondary: var(--color-surface-500);
-  --text-muted: var(--color-surface-400);
+  --text-secondary: var(--color-surface-600);
+  --text-muted: var(--color-surface-500);
   --text-inverse: white;
 
   --border-default: var(--color-surface-200);
   --border-strong: var(--color-surface-300);
 
   --ring-focus: var(--color-primary-500);
+
+  /* Header glassmorphism - more opaque for readability */
+  --header-bg: rgba(255, 255, 255, 0.92);
+  --header-border: var(--color-surface-200);
+
+  /* Dropdown backgrounds - fully opaque */
+  --dropdown-bg: #ffffff;
 
   color-scheme: light;
 }
@@ -136,16 +144,24 @@
   --bg-card: var(--color-surface-900);
   --bg-elevated: var(--color-surface-800);
   --bg-muted: var(--color-surface-800);
+  --bg-subtle: var(--color-surface-900);
 
   --text-primary: var(--color-surface-100);
-  --text-secondary: var(--color-surface-400);
-  --text-muted: var(--color-surface-500);
+  --text-secondary: var(--color-surface-300);
+  --text-muted: var(--color-surface-400);
   --text-inverse: var(--color-surface-900);
 
-  --border-default: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.12);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.15);
 
   --ring-focus: var(--color-primary-400);
+
+  /* Header glassmorphism - more opaque for dark mode */
+  --header-bg: rgba(15, 23, 42, 0.95);
+  --header-border: rgba(255, 255, 255, 0.08);
+
+  /* Dropdown backgrounds - fully opaque */
+  --dropdown-bg: var(--color-surface-900);
 
   color-scheme: dark;
 }
@@ -202,6 +218,7 @@ code, .font-mono {
 .bg-card { background-color: var(--bg-card); }
 .bg-elevated { background-color: var(--bg-elevated); }
 .bg-muted { background-color: var(--bg-muted); }
+.bg-subtle { background-color: var(--bg-subtle); }
 
 /* Text colors */
 .text-primary { color: var(--text-primary); }
@@ -239,15 +256,33 @@ code, .font-mono {
     var(--bg-page);
 }
 
-/* Glassmorphism */
+/* Glassmorphism - Enhanced for readability */
 .glass {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--header-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: var(--header-border);
 }
 
 .dark .glass {
-  background: rgba(15, 23, 42, 0.85);
+  background: var(--header-bg);
+}
+
+/* Solid card backgrounds for maximum readability */
+.solid-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+}
+
+/* Dropdown solid background */
+.dropdown-solid {
+  background: var(--dropdown-bg);
+  border: 1px solid var(--border-default);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
+}
+
+.dark .dropdown-solid {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
 }
 
 /* ============================================

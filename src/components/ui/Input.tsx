@@ -3,11 +3,11 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const inputVariants = cva(
-  `w-full rounded-[--radius-md] border bg-[--bg-card] px-3.5
+  `w-full rounded-[--radius-md] border bg-white dark:bg-surface-800 px-3.5
    text-[15px] text-[--text-primary] placeholder:text-[--text-muted]
    transition-all duration-[--duration-fast]
    focus:outline-none focus:ring-[3px]
-   disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[--bg-muted]`,
+   disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-surface-100 dark:disabled:bg-surface-900`,
   {
     variants: {
       variant: {

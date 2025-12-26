@@ -1,13 +1,15 @@
 import { forwardRef, type HTMLAttributes } from 'react'
 import { cn } from '@/lib/utils'
 
-// Base Card
+// Base Card - Solid background for maximum readability
 const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
-        'rounded-[--radius-lg] border border-[--border-default] bg-[--bg-card]',
+        'rounded-[--radius-lg] border border-[--border-default]',
+        'bg-white dark:bg-surface-900',
+        'shadow-sm',
         'transition-all duration-[--duration-normal]',
         className
       )}
@@ -73,15 +75,16 @@ const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 )
 CardFooter.displayName = 'CardFooter'
 
-// Interactive Card (hover effects)
+// Interactive Card (hover effects) - Enhanced with solid backgrounds
 const InteractiveCard = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <Card
       ref={ref}
       className={cn(
         'cursor-pointer',
-        'hover:border-primary-200 hover:shadow-lg hover:-translate-y-1',
-        'dark:hover:border-primary-700 dark:hover:shadow-glow-primary',
+        'hover:border-primary-300 hover:shadow-lg hover:-translate-y-1',
+        'dark:hover:border-primary-600 dark:hover:shadow-glow-primary',
+        'active:translate-y-0 active:shadow-md',
         className
       )}
       {...props}
