@@ -140,7 +140,7 @@ function TrustBadges() {
   ]
 
   return (
-    <section className="border-b border-[--border-default] bg-[--bg-subtle] py-8">
+    <section className="border-b border-[--border-default] bg-white dark:bg-surface-900 py-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
           {badges.map((badge) => (
@@ -190,7 +190,7 @@ function CategoriesSection() {
               key={category.id}
               to="/produits"
               search={{ category: category.slug }}
-              className="group flex flex-col items-center gap-3 rounded-xl border border-[--border-default] bg-[--bg-card] p-6 transition-all hover:border-primary-300 hover:shadow-lg dark:hover:border-primary-700"
+              className="group flex flex-col items-center gap-3 rounded-xl border border-[--border-default] bg-white dark:bg-surface-900 p-6 shadow-sm transition-all hover:border-primary-300 hover:shadow-lg hover:-translate-y-1 dark:hover:border-primary-600"
             >
               <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-100 dark:bg-primary-900/20 dark:text-primary-400 dark:group-hover:bg-primary-900/30">
                 {categoryIcons[category.slug] || <Monitor className="h-8 w-8" />}
@@ -221,7 +221,7 @@ function FeaturedProductsSection() {
   }
 
   return (
-    <section className="bg-[--bg-subtle] py-12 lg:py-16">
+    <section className="bg-surface-50 dark:bg-surface-950 py-12 lg:py-16">
       <div className="container mx-auto px-4">
         <div className="mb-8 flex items-center justify-between">
           <div>
@@ -378,10 +378,10 @@ function CategoriesSkeleton() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="flex flex-col items-center gap-3 rounded-xl border border-[--border-default] bg-[--bg-card] p-6"
+              className="flex flex-col items-center gap-3 rounded-xl border border-[--border-default] bg-white dark:bg-surface-900 p-6 shadow-sm"
             >
-              <div className="h-16 w-16 animate-shimmer rounded-xl bg-surface-200 dark:bg-surface-700" />
-              <div className="h-4 w-20 animate-shimmer rounded bg-surface-200 dark:bg-surface-700" />
+              <div className="h-16 w-16 animate-shimmer rounded-xl bg-surface-100 dark:bg-surface-800" />
+              <div className="h-4 w-20 animate-shimmer rounded bg-surface-100 dark:bg-surface-800" />
             </div>
           ))}
         </div>

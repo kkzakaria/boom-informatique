@@ -45,7 +45,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-[--border-default] bg-[--bg-card]/95 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-[--header-border] bg-[--header-bg] backdrop-blur-xl shadow-sm">
         <div className="container">
           <div className="flex h-16 items-center justify-between gap-4">
             {/* Left: Logo & Mobile Menu */}
@@ -148,7 +148,7 @@ export default function Header() {
                         className="fixed inset-0 z-40"
                         onClick={() => setIsUserMenuOpen(false)}
                       />
-                      <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-[--radius-lg] border border-[--border-default] bg-[--bg-card] p-2 shadow-lg">
+                      <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-[--radius-lg] border border-[--border-default] bg-white dark:bg-surface-900 p-2 shadow-xl">
                         <div className="border-b border-[--border-default] px-3 pb-2 mb-2">
                           <p className="text-sm font-medium text-[--text-primary]">
                             {user?.firstName} {user?.lastName}
@@ -247,7 +247,7 @@ export default function Header() {
             className="fixed inset-0 z-40 bg-black/50"
             onClick={() => setIsMenuOpen(false)}
           />
-          <aside className="fixed left-0 top-0 z-50 flex h-full w-80 flex-col bg-[--bg-card] shadow-xl">
+          <aside className="fixed left-0 top-0 z-50 flex h-full w-80 flex-col bg-white dark:bg-surface-900 shadow-2xl border-r border-[--border-default]">
             <div className="flex items-center justify-between border-b border-[--border-default] p-4">
               <span className="font-display text-lg font-semibold text-[--text-primary]">
                 Menu
@@ -335,12 +335,12 @@ function NavDropdown({
 
       {isOpen && (
         <div className="absolute left-0 top-full pt-2">
-          <div className="min-w-[200px] rounded-[--radius-lg] border border-[--border-default] bg-[--bg-card] p-2 shadow-lg">
+          <div className="min-w-[200px] rounded-[--radius-lg] border border-[--border-default] bg-white dark:bg-surface-900 p-2 shadow-xl">
             {items.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
-                className="block rounded-[--radius-md] px-3 py-2 text-sm text-[--text-secondary] transition-colors hover:bg-[--bg-muted] hover:text-[--text-primary]"
+                className="block rounded-[--radius-md] px-3 py-2 text-sm text-[--text-secondary] transition-colors hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-[--text-primary]"
               >
                 {item.label}
               </Link>
